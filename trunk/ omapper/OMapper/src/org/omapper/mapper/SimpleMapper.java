@@ -13,12 +13,13 @@ import org.omapper.exception.UnknownTypeException;
  * @author Sachin
  *
  */
-public class SimpleMapper<T,S> {
+public class SimpleMapper<T,S> extends AbstractMapper<T, S>{
 
 	
 
-	public SimpleMapper() {
-		// TODO Auto-generated constructor stub
+	@SuppressWarnings("unchecked")
+	public SimpleMapper(Class<T> targetClass, Class<S> sourceClass) {
+		super(targetClass,sourceClass);
 	}
 
 	public void mapBean(T target, S source) throws UnableToMapException, UnknownPropertyException,
