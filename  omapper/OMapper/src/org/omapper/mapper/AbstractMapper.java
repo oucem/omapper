@@ -3,14 +3,13 @@ package org.omapper.mapper;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-import org.omapper.interfaces.Mapper;
 import org.omapper.util.MapperUtil;
 
 /**
  * @author Sachin
  * 
  */
-public abstract class AbstractMapper<T, S> implements Mapper<T, S> {
+public abstract class AbstractMapper<T, S> {
 
 	Map<String, Field> sourceFieldsMap;
 	Map<String, Field> targetFieldsMap;

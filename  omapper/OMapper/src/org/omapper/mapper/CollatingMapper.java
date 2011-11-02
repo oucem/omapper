@@ -12,10 +12,11 @@ import org.omapper.exception.UnknownTypeException;
  * 
  */
 
-public class CollatingMapper<T> {
+public class CollatingMapper<T>  {
 
-	public CollatingMapper( Class<? extends Object>... sourceClasses) {
-		// TODO Auto-generated constructor stub
+	public CollatingMapper(Class<T> targetClass, Class<? extends Object>... sourceClasses) {
+
+		
 	}
 
 	public void mapBean(Object target, Object... source)
