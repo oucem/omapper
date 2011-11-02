@@ -11,8 +11,8 @@ import org.omapper.util.MapperUtil;
  */
 public abstract class AbstractMapper<T, S> {
 
-	Map<String, Field> sourceFieldsMap;
-	Map<String, Field> targetFieldsMap;
+	protected Map<String, Field> sourceFieldsMap;
+	protected Map<String, Field> targetFieldsMap;
 
 	protected void initFieldMaps(Class<T> targetClass, Class<S>... sourceClass) {
 
