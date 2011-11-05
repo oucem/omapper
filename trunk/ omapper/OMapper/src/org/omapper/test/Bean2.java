@@ -8,7 +8,7 @@ import org.omapper.annotations.Source;
 @Mappable
 public class Bean2 {
 
-	@Source(type = Bean1.class, property = "name")
+	@Source(type = org.omapper.test.Bean1.class, property = "name")
 	private String name;
 	@Source(type = Bean1.class, property = "address")
 	private String address;
