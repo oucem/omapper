@@ -24,7 +24,8 @@ public class SimpleMapper<T,S> extends AbstractMapper<T, S>{
 
 	public void mapBean(T target, S source) throws UnableToMapException, UnknownPropertyException,
 	UnknownTypeException  {
-		// TODO Auto-generated method stub
+		
+		
 		
 	}
 
