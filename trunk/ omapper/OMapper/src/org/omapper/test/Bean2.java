@@ -71,4 +71,15 @@ public class Bean2 {
 		this.emp_id = emp_id;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Bean2 [name=").append(name).append(", address=")
+				.append(address).append(", age=").append(age)
+				.append(", emp_id=").append(emp_id).append(", positionsList=")
+				.append(positionsList).append(", companyName=")
+				.append(companyName).append("]");
+		return builder.toString();
+	}
+
 }

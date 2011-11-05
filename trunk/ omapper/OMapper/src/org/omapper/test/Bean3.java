@@ -28,4 +28,12 @@ public class Bean3 {
 		this.positionsList = positionsList;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Bean3 [companyName=").append(companyName)
+				.append(", positionsList=").append(positionsList).append("]");
+		return builder.toString();
+	}
+
 }
