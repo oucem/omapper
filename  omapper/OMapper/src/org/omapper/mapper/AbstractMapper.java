@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.omapper.annotations.Source;
+import org.omapper.exception.UnknownTypeException;
 
 /**
+ * 
  * @author Sachin
  * 
  */
@@ -33,15 +35,18 @@ public abstract class AbstractMapper<T, S> {
 				if (null != sourceAnnotation) {
 					String sourceFieldName = sourceAnnotation.property();
 					Class sourceClassName = sourceAnnotation.type();
+					if (!sourceClassMap.containsKey(sourceClassName)) {
+						throw new UnknownTypeException();
+					}
 					Field sourceField = sourceClassName
 							.getDeclaredField(sourceFieldName);
 					sourceField.setAccessible(true);
-					MapEntry entry=new MapEntry(sourceField,targetField);
-					fieldMappingMap.put(targetField.getName(),entry);
+					MapEntry entry = new MapEntry(sourceField, targetField);
+					fieldMappingMap.put(targetField.getName(), entry);
 				}
 			}
 		}
-		
+
 		System.out.println(fieldMappingMap);
 
 	}
