@@ -3,6 +3,8 @@
  */
 package org.omapper.mapper;
 
+import java.lang.reflect.Field;
+
 import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
@@ -23,8 +25,16 @@ public class SimpleMapper<T,S> extends AbstractMapper<T, S>{
 	}
 
 	public void mapBean(T target, S source) throws UnableToMapException, UnknownPropertyException,
-	UnknownTypeException  {
+	UnknownTypeException, IllegalArgumentException, IllegalAccessException  {
 		
+		Field[] targetFields=target.getClass().getDeclaredFields();
+		for (Field targetField:targetFields)
+		{
+			targetField.setAccessible(true);
+			String fieldName=targetField.getName();
+			Field sourceField=fieldMappingMap.get(fieldName).getSourceField();
+			targetField.set(target,sourceField.get(source));
+		}
 		
 		
 	}
