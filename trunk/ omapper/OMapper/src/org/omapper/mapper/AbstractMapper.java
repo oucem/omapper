@@ -36,7 +36,8 @@ public abstract class AbstractMapper<T, S> {
 					String sourceFieldName = sourceAnnotation.property();
 					Class sourceClassName = sourceAnnotation.type();
 					if (!sourceClassMap.containsKey(sourceClassName)) {
-						throw new UnknownTypeException();
+						throw new UnknownTypeException("The source class in annotation :"+ sourceClassName+ " is not valid");
+						
 					}
 					Field sourceField = sourceClassName
 							.getDeclaredField(sourceFieldName);
