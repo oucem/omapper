@@ -12,7 +12,7 @@ import org.omapper.exception.UnknownTypeException;
  * @author Sachin
  * 
  */
-public abstract class AbstractMapper<T, S> {
+public abstract class AbstractMapper {
 
 	protected Map<String, MapEntry> fieldMappingMap;
 
@@ -35,9 +35,13 @@ public abstract class AbstractMapper<T, S> {
 				if (null != sourceAnnotation) {
 					String sourceFieldName = sourceAnnotation.property();
 					Class sourceClassName = sourceAnnotation.type();
-					if (!sourceClassMap.containsKey(sourceClassName)) {
-						throw new UnknownTypeException("The source class in annotation :"+ sourceClassName+ " is not valid");
-						
+					if (!sourceClassMap.containsKey(sourceClassName
+							.getCanonicalName())) {
+						continue;
+						// throw new
+						// UnknownTypeException("The source class in annotation :"+
+						// sourceClassName+ " is not valid");
+
 					}
 					Field sourceField = sourceClassName
 							.getDeclaredField(sourceFieldName);
@@ -60,7 +64,7 @@ public abstract class AbstractMapper<T, S> {
 		return true;
 	}
 
-	public AbstractMapper(Class<T> targetClass, Class<S>... sourceClass) {
+	public AbstractMapper(Class targetClass, Class... sourceClass) {
 
 		try {
 			fieldMappingMap = new HashMap<String, MapEntry>();
