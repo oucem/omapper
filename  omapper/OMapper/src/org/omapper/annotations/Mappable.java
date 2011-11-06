@@ -10,10 +10,9 @@ import java.lang.annotation.Target;
 
 /**
  * This is just a marker annotation to signify that a given bean is mappable and
- * to be processed by the mapping engine
- * 
+ * to be processed by the mapping engine.
+ *
  * @author Sachin
- * 
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
