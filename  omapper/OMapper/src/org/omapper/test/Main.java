@@ -38,10 +38,15 @@ public class Main {
 		System.out.println("Bean2="+bean2);
 		System.out.println("Bean1="+bean1);
 		System.out.println("Simple Mapper Dempo.....Ends");
-		@SuppressWarnings("unchecked")
 		
+		bean2=new Bean2();
+		
+		@SuppressWarnings("unchecked")
 		CollatingMapper<Bean2> collatingMapper=new CollatingMapper<Bean2>(Bean2.class,Bean1.class, Bean3.class);
-		collatingMapper.mapBean(bean2, bean1,bean3);
+		List<Object> sourceClasses=new ArrayList<Object>();
+		sourceClasses.add(bean1);
+		sourceClasses.add(bean3);
+		collatingMapper.mapBean(bean2,sourceClasses);
 		System.out.println("Collating Mapper Dempo.....Starts");
 		System.out.println("Bean2="+bean2);
 		System.out.println("Bean1="+bean1);
