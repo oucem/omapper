@@ -9,15 +9,23 @@ import org.omapper.annotations.Source;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
+// TODO: Auto-generated Javadoc
 /**
- * 
+ * The Class AbstractMapper.
+ *
  * @author Sachin
- * 
  */
 public abstract class AbstractMapper {
 
+	/** The field mapping map. */
 	protected Map<String, MapEntry> fieldMappingMap;
 
+	/**
+	 * Inits the field maps.
+	 *
+	 * @param targetClass the target class
+	 * @param sourceClass the source class
+	 */
 	@SuppressWarnings("rawtypes")
 	protected void initFieldMaps(Class targetClass, Class... sourceClass){
 
@@ -65,13 +73,22 @@ public abstract class AbstractMapper {
 	}
 
 	/**
-	 * To be Done
+	 * To be Done.
+	 *
+	 * @param targetField the target field
+	 * @return true, if successful
 	 */
 	private boolean checkIfAnnotationsPresent(Field targetField) {
 		// TODO Auto-generated method stub
 		return true;
 	}
 
+	/**
+	 * Instantiates a new abstract mapper.
+	 *
+	 * @param targetClass the target class
+	 * @param sourceClass the source class
+	 */
 	public AbstractMapper(Class targetClass, Class... sourceClass) {
 
 		

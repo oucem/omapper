@@ -3,21 +3,39 @@ package org.omapper.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.xml.DOMConfigurator;
 import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 import org.omapper.mapper.CollatingMapper;
 import org.omapper.mapper.SimpleMapper;
 
+// TODO: Auto-generated Javadoc
 /**
- * Test Class for OMapper Framework
- * @author Sachin
+ * Test Class for OMapper Framework.
  *
+ * @author Sachin
  */
 public class Main {
 	
+	/** The logger. */
+	static Logger logger = Logger.getLogger(Main.class);
+	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws UnableToMapException the unable to map exception
+	 * @throws UnknownPropertyException the unknown property exception
+	 * @throws UnknownTypeException the unknown type exception
+	 * @throws IllegalArgumentException the illegal argument exception
+	 * @throws IllegalAccessException the illegal access exception
+	 */
 	public static void main(String[] args) throws UnableToMapException, UnknownPropertyException, UnknownTypeException, IllegalArgumentException, IllegalAccessException {
 		
+		DOMConfigurator.configure("config/log4j.xml");
+		logger.debug("Sample program starts");
 		SimpleMapper<Bean2, Bean1> mapper=new SimpleMapper<Bean2, Bean1>(Bean2.class,Bean1.class);
 		Bean1 bean1=new Bean1();
 		bean1.setAddress("My address");
@@ -34,10 +52,10 @@ public class Main {
 		bean3.setPositionsList(positionsList);
 		
 		mapper.mapBean(bean2, bean1);
-		System.out.println("Simple Mapper Dempo.....Starts");
-		System.out.println("Bean2="+bean2);
-		System.out.println("Bean1="+bean1);
-		System.out.println("Simple Mapper Dempo.....Ends");
+		logger.debug("Simple Mapper Dempo.....Starts");
+		logger.debug("Bean2="+bean2);
+		logger.debug("Bean1="+bean1);
+		logger.debug("Simple Mapper Dempo.....Ends");
 		
 		bean2=new Bean2();
 		

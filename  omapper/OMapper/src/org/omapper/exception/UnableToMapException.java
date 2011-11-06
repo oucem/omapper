@@ -3,26 +3,28 @@
  */
 package org.omapper.exception;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Sachin
+ * The Class UnableToMapException.
  *
+ * @author Sachin
  */
 public class UnableToMapException extends RuntimeException {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 
+	 * Instantiates a new unable to map exception.
 	 */
 	public UnableToMapException() {
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @param message
+	 * Instantiates a new unable to map exception.
+	 *
+	 * @param message the message
 	 */
 	public UnableToMapException(String message) {
 		super(message);
@@ -30,7 +32,9 @@ public class UnableToMapException extends RuntimeException {
 	}
 
 	/**
-	 * @param cause
+	 * Instantiates a new unable to map exception.
+	 *
+	 * @param cause the cause
 	 */
 	public UnableToMapException(Throwable cause) {
 		super(cause);
@@ -38,8 +42,10 @@ public class UnableToMapException extends RuntimeException {
 	}
 
 	/**
-	 * @param message
-	 * @param cause
+	 * Instantiates a new unable to map exception.
+	 *
+	 * @param message the message
+	 * @param cause the cause
 	 */
 	public UnableToMapException(String message, Throwable cause) {
 		super(message, cause);
