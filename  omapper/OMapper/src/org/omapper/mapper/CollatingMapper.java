@@ -5,7 +5,6 @@ package org.omapper.mapper;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.omapper.exception.UnableToMapException;
@@ -25,7 +24,7 @@ public class CollatingMapper<T> extends AbstractMapper {
 		super(targetClass, sourceClasses);
 	}
 
-	public void mapBean(Object target, List<Object> source)
+	public void mapBean(Object target, Object... source)
 			throws UnableToMapException, UnknownPropertyException,
 			UnknownTypeException, IllegalArgumentException, IllegalAccessException {
 		
