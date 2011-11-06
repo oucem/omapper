@@ -8,16 +8,28 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+// TODO: Auto-generated Javadoc
 /**
- * @author Sachin
+ * The Interface Source.
  *
+ * @author Sachin
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Source {
 	
+	/**
+	 * Type.
+	 *
+	 * @return the class
+	 */
 	public Class type();
 	
+	/**
+	 * Property.
+	 *
+	 * @return the string
+	 */
 	public String property();
 	
 	
