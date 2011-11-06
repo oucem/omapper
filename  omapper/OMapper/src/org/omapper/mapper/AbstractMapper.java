@@ -1,10 +1,12 @@
 package org.omapper.mapper;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.omapper.annotations.Source;
+import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
 /**
@@ -17,8 +19,7 @@ public abstract class AbstractMapper {
 	protected Map<String, MapEntry> fieldMappingMap;
 
 	@SuppressWarnings("rawtypes")
-	protected void initFieldMaps(Class targetClass, Class... sourceClass)
-			throws NoSuchFieldException {
+	protected void initFieldMaps(Class targetClass, Class... sourceClass){
 
 		Map<String, Class> sourceClassMap = new HashMap<String, Class>();
 
@@ -37,17 +38,24 @@ public abstract class AbstractMapper {
 					Class sourceClassName = sourceAnnotation.type();
 					if (!sourceClassMap.containsKey(sourceClassName
 							.getCanonicalName())) {
-						continue;
-						// throw new
-						// UnknownTypeException("The source class in annotation :"+
-						// sourceClassName+ " is not valid");
+						throw new UnknownTypeException(
+								"The source class in annotation :"
+										+ sourceClassName + " is not valid, valid values for the type: "+Arrays.toString(sourceClass));
 
 					}
+					
+					try{
 					Field sourceField = sourceClassName
 							.getDeclaredField(sourceFieldName);
+					
 					sourceField.setAccessible(true);
 					MapEntry entry = new MapEntry(sourceField, targetField);
 					fieldMappingMap.put(targetField.getName(), entry);
+					}
+					catch(NoSuchFieldException e)
+					{
+						throw new UnknownPropertyException("Property defined in annotation :"+ sourceFieldName+ " is not prsent in source type:"+sourceClassName, e);
+					}
 				}
 			}
 		}
@@ -66,13 +74,10 @@ public abstract class AbstractMapper {
 
 	public AbstractMapper(Class targetClass, Class... sourceClass) {
 
-		try {
+		
 			fieldMappingMap = new HashMap<String, MapEntry>();
 			initFieldMaps(targetClass, sourceClass);
-		} catch (NoSuchFieldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 
 	}
 }
