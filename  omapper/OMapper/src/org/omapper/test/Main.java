@@ -43,10 +43,7 @@ public class Main {
 		
 		@SuppressWarnings("unchecked")
 		CollatingMapper<Bean2> collatingMapper=new CollatingMapper<Bean2>(Bean2.class,Bean1.class, Bean3.class);
-		List<Object> sourceClasses=new ArrayList<Object>();
-		sourceClasses.add(bean1);
-		sourceClasses.add(bean3);
-		collatingMapper.mapBean(bean2,sourceClasses);
+		collatingMapper.mapBean(bean2, bean1,bean3);
 		System.out.println("Collating Mapper Dempo.....Starts");
 		System.out.println("Bean2="+bean2);
 		System.out.println("Bean1="+bean1);
