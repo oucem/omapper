@@ -11,19 +11,39 @@ import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
+// TODO: Auto-generated Javadoc
 /**
+ * The Class CollatingMapper.
+ *
+ * @param <T> the generic type
  * @author Sachin
- * 
  */
 
 public class CollatingMapper<T> extends AbstractMapper {
 
+	/**
+	 * Instantiates a new collating mapper.
+	 *
+	 * @param targetClass the target class
+	 * @param sourceClasses the source classes
+	 */
 	public CollatingMapper(Class<T> targetClass,
 			Class<? extends Object>... sourceClasses) {
 
 		super(targetClass, sourceClasses);
 	}
 
+	/**
+	 * Map bean.
+	 *
+	 * @param target the target
+	 * @param source the source
+	 * @throws UnableToMapException the unable to map exception
+	 * @throws UnknownPropertyException the unknown property exception
+	 * @throws UnknownTypeException the unknown type exception
+	 * @throws IllegalArgumentException the illegal argument exception
+	 * @throws IllegalAccessException the illegal access exception
+	 */
 	public void mapBean(Object target, Object... source)
 			throws UnableToMapException, UnknownPropertyException,
 			UnknownTypeException, IllegalArgumentException, IllegalAccessException {
