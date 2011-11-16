@@ -7,7 +7,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MapperUtil.
  *
@@ -16,7 +15,7 @@ import java.util.Map;
 public class MapperUtil {
 
 	/**
-	 * Gets the field map.
+	 * Gets the field map for all the fields in the passed classes array.
 	 *
 	 * @param targetClasses the target classes
 	 * @return the field map
