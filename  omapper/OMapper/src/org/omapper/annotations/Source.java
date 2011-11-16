@@ -8,9 +8,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-// TODO: Auto-generated Javadoc
+
 /**
- * The Interface Source.
+ * The Annotation Source.
  *
  * @author Sachin
  */
@@ -19,14 +19,14 @@ import java.lang.annotation.Target;
 public @interface Source {
 	
 	/**
-	 * Type.
+	 * Type-This value defines the source class
 	 *
 	 * @return the class
 	 */
 	public Class type();
 	
 	/**
-	 * Property.
+	 * Property-This value defines the property value which corresponds to mapped value
 	 *
 	 * @return the string
 	 */
