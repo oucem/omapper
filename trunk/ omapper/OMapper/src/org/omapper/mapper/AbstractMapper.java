@@ -89,6 +89,7 @@ public abstract class AbstractMapper {
 	 * @param targetClass the target class
 	 * @param sourceClass the source class
 	 */
+	@SuppressWarnings("rawtypes")
 	public AbstractMapper(Class targetClass, Class... sourceClass) {
 
 		
