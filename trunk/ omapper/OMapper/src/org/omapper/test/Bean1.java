@@ -9,6 +9,14 @@ public class Bean1 {
 
 	/** The name. */
 	private String name;
+	/** The address. */
+	private String address;
+	
+	/** The age. */
+	private int age;
+	
+	/** The emp_id. */
+	private Integer emp_id;
 	
 	/**
 	 * Gets the name.
@@ -82,14 +90,7 @@ public class Bean1 {
 		this.emp_id = emp_id;
 	}
 	
-	/** The address. */
-	private String address;
-	
-	/** The age. */
-	private int age;
-	
-	/** The emp_id. */
-	private Integer emp_id;
+
 	
 	
 	/* (non-Javadoc)
