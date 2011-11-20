@@ -7,7 +7,7 @@ import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 import org.omapper.mapper.SimpleMapper;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * Test Class for OMapper Framework.
  *
