@@ -68,4 +68,68 @@ So, this approach has a few drawbacks:
 
 => Anytime a new property is added or removed both bean definition and
 transformation logic needs to revisited.
+
+=> Matters get worse when the names of the properties in the two bean classes have different names but same information, the get-set code gets more error prone.
+
+=> What if the target bean needs to collate information from more than one bean? The get-set block tends to be a bit messed up.
+
+The library Omapper tries to solve the above problems by providing annotation based way to specify the bean mappings.
+There are more powerful frameworks for this purpose which are xml based and some of them annotation based too like *Dozer* but I found the usage a bit complex.
+
+Lets try to rewrite the above example using Omapper :
+
+Now the question is where shall we put the mappings in source or target bean??
+
+Logically the target should know where it needs to pull data from , which class , which property and think about the scenario where we need to collate data from multiple beans.. so Omapper works on the same philosophy...
+
+So, lets redefine Bean2 definition a bit and decorate it with some magic annotations:
+{{{
+/**
+ * The Class Bean2.
+ */
+@Mappable
+public class Bean2 {
+
+	/** The name. */
+	@Source(type = org.omapper.test.Bean1.class, property = "name")
+	private String name;
+	
+	/** The address. */
+	@Source(type = Bean1.class, property = "address")
+	private String address;
+	
+	/** The age. */
+	@Source(type = Bean1.class, property = "age")
+	private int age;
+	
+	/** The emp_id. */
+	@Source(type = Bean1.class, property = "emp_id")
+	private Integer emp_id;
+
+}
+
+}}}
  
+Doesn't seem to different just a few annotations and no get-set clutter.
+So, lets see what has been done.
+
+There are two annotations defined by Omapper:
+ {{{
+ @Mappable
+}}}
+
+ This annotation is a marker annotation to identify which beans are
+ managed by OMapper.
+
+{{{
+ @Source(type = Bean1.class, property = "age")
+}}}
+ 
+This annotation defines the mapping.
+
+Here,
+type => defines which class the source property comes from,
+
+property=> defines the name of the source property(might be a         different name than target property)
+
+
