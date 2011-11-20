@@ -9,9 +9,9 @@ And while adding another access layer like web services, it would again have som
 So , as a result we have two similar classes.
 Now , while communicating between different layers , we write a error prone transformation logic which comprises of multiple chained get and set operations.
 For Example:
-There is a business layer which has a bean called CustomerBean_BS :
+There is a business layer which has a bean called CustomerBeanBS :
 {{{
-   CustomerBean_BS {
+   CustomerBeanBS {
       String name;
       String address;
       int age;         
@@ -21,10 +21,10 @@ There is a business layer which has a bean called CustomerBean_BS :
 }}}
 
 And similarly web service layer above that also exposes a bean called 
-CustomerBean_WS with exactly same structure as BS one:
+CustomerBeanWS with exactly same structure as BS one:
 
 {{{
-   CustomerBean_WS {
+   CustomerBeanWS {
       String name;
       String address;
       int age;         
@@ -32,4 +32,3 @@ CustomerBean_WS with exactly same structure as BS one:
 
 
 }}}
-
