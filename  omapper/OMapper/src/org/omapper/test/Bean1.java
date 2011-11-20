@@ -1,6 +1,6 @@
 package org.omapper.test;
 
-// TODO: Auto-generated Javadoc
+
 //Source Bean
 /**
  * The Class Bean1.
