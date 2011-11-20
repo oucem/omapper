@@ -5,7 +5,7 @@ import java.util.List;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class Bean2.
  */
