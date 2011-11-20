@@ -28,13 +28,22 @@ There is a business layer which has a bean called Bean1:
 }}}
 
 And similarly web service layer above that also exposes a bean called 
-CustomerBeanWS with exactly same structure as BS one:
+Bean2 with exactly same structure as BS one:
 
 {{{
-   CustomerBeanWS {
-      String name;
-      String address;
-      int age;         
+   public class Bean2 {
+
+	/** The name. */
+	private String name;
+	
+	/** The address. */
+	private String address;
+	
+	/** The age. */
+	private int age;
+	
+	/** The emp_id. */
+	private Integer emp_id;        
 }
 
 
