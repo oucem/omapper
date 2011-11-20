@@ -9,6 +9,7 @@ public class Bean1 {
 
 	/** The name. */
 	private String name;
+	
 	/** The address. */
 	private String address;
 	
