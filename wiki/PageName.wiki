@@ -49,3 +49,23 @@ Bean2 with exactly same structure as BS one:
 
 
 }}}
+
+Earlier you would write some transformation method like :
+{{{
+ transformBean1ToBean2(Bean1 bean1, Bean2 bean2)
+	{
+		bean2.setAddress(bean1.getAddress());
+		bean2.setAge(bean1.getAge());
+		bean2.setEmp_id(bean1.getEmp_id());
+		bean2.setName(bean1.getName());
+	}
+
+}}}
+
+So, this approach has a few drawbacks:
+
+=> As the number of properties increase the get-set clutter increase and sometimes leads to missing mappings.
+
+=> Anytime a new property is added or removed both bean definition and
+transformation logic needs to revisited.
+ 
