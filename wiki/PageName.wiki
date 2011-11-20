@@ -1,0 +1,42 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Omapper is a simple library which provides utilities to transform java beans from one design layer to another.
+Say for example ,
+you have a legacy application which has some java beans like Customer, Account etc.
+And while adding another access layer like web services, it would again have some bean with same structure and data as the backend application.
+So , as a result we have two similar classes.
+Now , while communicating between different layers , we write a error prone transformation logic which comprises of multiple chained get and set operations.
+For Example:
+There is a business layer which has a bean called CustomerBean_BS :
+{{{
+   CustomerBean_BS {
+      String name;
+      String address;
+      int age;         
+}
+
+
+}}}
+
+And similarly web service layer above that also exposes a bean called 
+CustomerBean_WS with exactlys ame structure as BS one:
+
+{{{
+   CustomerBean_WS {
+      String name;
+      String address;
+      int age;         
+}
+
+
+}}}
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
