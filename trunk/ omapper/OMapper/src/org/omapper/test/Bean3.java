@@ -2,7 +2,6 @@ package org.omapper.test;
 
 import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Bean3.
  *
