@@ -21,7 +21,7 @@ There is a business layer which has a bean called CustomerBean_BS :
 }}}
 
 And similarly web service layer above that also exposes a bean called 
-CustomerBean_WS with exactlys ame structure as BS one:
+CustomerBean_WS with exactly same structure as BS one:
 
 {{{
    CustomerBean_WS {
@@ -33,10 +33,3 @@ CustomerBean_WS with exactlys ame structure as BS one:
 
 }}}
 
-
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
