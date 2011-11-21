@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 /**
  * The Class MapEntry.
  */
-public class MapEntry {
+class MapEntry {
 
 	/** The source field. */
 	private final Field sourceField;
