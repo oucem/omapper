@@ -1,7 +1,7 @@
 #summary Introduction and usage guide for OMapper
 #sidebar Table Of Contents
 
-*[ =Introduction= ]
+=Introduction=
 
 Omapper is a simple library which provides utilities to transform java beans from one design layer to another.
 Say for example ,
@@ -73,6 +73,10 @@ transformation logic needs to revisited.
 => Matters get worse when the names of the properties in the two bean classes have different names but same information, the get-set code gets more error prone.
 
 => What if the target bean needs to collate information from more than one bean? The get-set block tends to be a bit messed up.
+
+
+----
+=Usage:=
 
 The library Omapper tries to solve the above problems by providing annotation based way to specify the bean mappings.
 There are more powerful frameworks for this purpose which are xml based and some of them annotation based too like *Dozer* but I found the usage a bit complex.
