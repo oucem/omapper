@@ -9,12 +9,12 @@ import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
-// TODO: Auto-generated Javadoc
+
 /**
- * The Class SimpleMapper.
+ * This mapper maps one bean class to another
  *
- * @param <T> the generic type
- * @param <S> the generic type
+ * @param <T> the generic type for target bean
+ * @param <S> the generic type for source bean
  * @author Sachin
  */
 public class SimpleMapper<T, S> extends AbstractMapper {
