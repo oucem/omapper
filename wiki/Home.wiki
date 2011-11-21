@@ -1,7 +1,7 @@
 #summary Introduction and usage guide for OMapper
 #sidebar Table Of Contents
 
-= Introduction =
+*[ =Introduction= ]
 
 Omapper is a simple library which provides utilities to transform java beans from one design layer to another.
 Say for example ,
