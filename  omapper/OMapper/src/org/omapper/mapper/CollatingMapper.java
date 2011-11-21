@@ -13,7 +13,7 @@ import org.omapper.exception.UnknownTypeException;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class CollatingMapper.
+ * This mapper is used to collate data from mutiple beans to one bean
  *
  * @param <T> the generic type
  * @author Sachin
