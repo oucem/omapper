@@ -61,7 +61,7 @@ public abstract class AbstractMapper {
 					}
 					catch(NoSuchFieldException e)
 					{
-						throw new UnknownPropertyException("Property defined in annotation :"+ sourceFieldName+ " is not prsent in source type:"+sourceClassName);
+						throw new UnknownPropertyException("Source Property:"+sourceFieldName+" defined in annotation for field :"+ targetField+ " is not prsent in source type:"+sourceClassName);
 					}
 				}
 			}
