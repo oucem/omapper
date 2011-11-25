@@ -9,7 +9,6 @@ import org.omapper.annotations.Source;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractMapper.
  *
@@ -62,7 +61,7 @@ public abstract class AbstractMapper {
 					}
 					catch(NoSuchFieldException e)
 					{
-						throw new UnknownPropertyException("Property defined in annotation :"+ sourceFieldName+ " is not prsent in source type:"+sourceClassName, e);
+						throw new UnknownPropertyException("Property defined in annotation :"+ sourceFieldName+ " is not prsent in source type:"+sourceClassName);
 					}
 				}
 			}
