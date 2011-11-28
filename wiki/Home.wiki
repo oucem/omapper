@@ -227,3 +227,4 @@ collatingMapper.mapBean(bean2, bean1,bean3);
 }}}
 
 Both the constructor and mapBean method in CollatingMapper support var args , so when the source bean count increases one can even pass an array of source beans.
+First argument specifies the target bean, and second argument is a var arg parameter specifying the source beans.
