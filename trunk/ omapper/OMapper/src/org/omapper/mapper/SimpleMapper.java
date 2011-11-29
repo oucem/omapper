@@ -52,6 +52,29 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 	 */
 	public void mapBean(T target, S source) {
 
+		mapBeanBasic(target, source);
+	}
+
+	/**
+	 * Map bean.
+	 * 
+	 * @param target
+	 *            the target
+	 * @param source
+	 *            the source
+	 * @throws UnableToMapException
+	 *             the unable to map exception
+	 * @throws UnknownPropertyException
+	 *             the unknown property exception
+	 * @throws UnknownTypeException
+	 *             the unknown type exception
+	 * @throws IllegalArgumentException
+	 *             the illegal argument exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 */
+	private void mapBeanBasic(Object target, Object source) {
+
 		try {
 			Field[] targetFields = target.getClass().getDeclaredFields();
 			for (Field targetField : targetFields) {
@@ -61,7 +84,8 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 				if (entry != null) {
 					Field sourceField = fieldMappingMap.get(fieldName)
 							.getSourceField();
-
+					
+					
 					targetField.set(target, sourceField.get(source));
 				}
 			}
@@ -76,5 +100,6 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 		}
 
 	}
-
+	
+	
 }
