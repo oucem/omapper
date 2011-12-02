@@ -22,6 +22,24 @@ public abstract class AbstractMapper {
 
 	/** The field mapping map. */
 	protected Map<String, MapEntry> fieldMappingMap;
+	
+	
+	/**
+	 * Instantiates a new abstract mapper.
+	 * 
+	 * @param targetClass
+	 *            the target class
+	 * @param sourceClass
+	 *            the source class
+	 */
+	@SuppressWarnings("rawtypes")
+	public AbstractMapper(Class targetClass, Class... sourceClass) {
+
+		fieldMappingMap = new HashMap<String, MapEntry>();
+		initFieldMaps(targetClass, sourceClass);
+
+	}
+	
 
 	/**
 	 * Inits the field maps.
@@ -35,7 +53,7 @@ public abstract class AbstractMapper {
 	protected void initFieldMaps(Class targetClass, Class... sourceClass) {
 
 		checkIfMappable(targetClass);
-		
+
 		Map<String, Class> sourceClassMap = new HashMap<String, Class>();
 
 		for (Class source : sourceClass) {
@@ -91,7 +109,7 @@ public abstract class AbstractMapper {
 	/**
 	 * @param annotatedElements
 	 */
-	private void checkIfMappable(AnnotatedElement... annotatedElements) {
+	protected void checkIfMappable(AnnotatedElement... annotatedElements) {
 
 		if (annotatedElements != null) {
 			for (AnnotatedElement element : annotatedElements) {
@@ -166,20 +184,6 @@ public abstract class AbstractMapper {
 
 	}
 
-	/**
-	 * Instantiates a new abstract mapper.
-	 * 
-	 * @param targetClass
-	 *            the target class
-	 * @param sourceClass
-	 *            the source class
-	 */
-	@SuppressWarnings("rawtypes")
-	public AbstractMapper(Class targetClass, Class... sourceClass) {
-
-		fieldMappingMap = new HashMap<String, MapEntry>();
-		initFieldMaps(targetClass, sourceClass);
-
-	}
+	
 
 }
