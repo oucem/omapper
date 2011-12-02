@@ -1,5 +1,6 @@
 package org.omapper.mapper;
 
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -88,16 +89,16 @@ public abstract class AbstractMapper {
 	}
 
 	/**
-	 * @param classArray
+	 * @param annotatedElements
 	 */
-	private void checkIfMappable(Class<?>... classArray) {
+	private void checkIfMappable(AnnotatedElement... annotatedElements) {
 
-		if (classArray != null) {
-			for (Class<?> classElement : classArray) {
-				if (!classElement.isAnnotationPresent(Mappable.class)) {
+		if (annotatedElements != null) {
+			for (AnnotatedElement element : annotatedElements) {
+				if (!element.isAnnotationPresent(Mappable.class)) {
 					throw new NonMappableTargetBeanException(
 							"Target Bean Class:"
-									+ classElement
+									+ element
 									+ " is not mappable.\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
 				}
 			}
