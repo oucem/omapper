@@ -25,9 +25,7 @@ public abstract class AbstractMapper {
 
 	/** The field mapping map. */
 	protected Map<String, MapEntry> fieldMappingMap;
-	
-	
-	
+
 	/**
 	 * Instantiates a new abstract mapper.
 	 * 
@@ -43,7 +41,6 @@ public abstract class AbstractMapper {
 		initFieldMaps(targetClass, sourceClass);
 
 	}
-	
 
 	/**
 	 * Inits the field maps.
@@ -66,7 +63,7 @@ public abstract class AbstractMapper {
 
 		Field[] targetFieldsArray = targetClass.getDeclaredFields();
 		for (Field targetField : targetFieldsArray) {
-			
+
 			targetField.setAccessible(true);
 			if (targetField.isAnnotationPresent(Source.class)) {
 				Source sourceAnnotation = targetField
@@ -90,8 +87,9 @@ public abstract class AbstractMapper {
 
 						sourceField.setAccessible(true);
 						MapEntry entry = new MapEntry(sourceField, targetField);
-						fieldMappingMap.put(constructFieldMappingKey(targetField), entry);
-						
+						fieldMappingMap.put(
+								constructFieldMappingKey(targetField), entry);
+
 						if (targetField.getClass().isAnnotationPresent(
 								Mappable.class)) {
 							initFieldMaps(targetField.getClass(),
@@ -122,16 +120,17 @@ public abstract class AbstractMapper {
 	 * @return
 	 */
 	private String constructFieldMappingKey(Field targetField) {
-		
-		StringBuilder key=new StringBuilder(targetField.getDeclaringClass().getCanonicalName()).append('.').append(targetField.getName());
+
+		StringBuilder key = new StringBuilder(targetField.getDeclaringClass()
+				.getCanonicalName()).append('.').append(targetField.getName());
 		return key.toString();
 	}
 
-
 	/**
 	 * Check if mappable.
-	 *
-	 * @param annotatedElements the annotated elements
+	 * 
+	 * @param annotatedElements
+	 *            the annotated elements
 	 */
 	protected void checkIfMappable(AnnotatedElement... annotatedElements) {
 
@@ -150,9 +149,12 @@ public abstract class AbstractMapper {
 
 	/**
 	 * Map bean.
-	 *
-	 * @param target the target
-	 * @param source the source
+	 * 
+	 * @param target
+	 *            the target
+	 * @param source
+	 *            the source
+	 * @throws InstantiationException
 	 */
 	protected void mapBean(Object target, Object... source) {
 		try {
@@ -174,19 +176,22 @@ public abstract class AbstractMapper {
 			Field[] targetFields = target.getClass().getDeclaredFields();
 			for (Field targetField : targetFields) {
 				targetField.setAccessible(true);
-				MapEntry entry = fieldMappingMap.get(constructFieldMappingKey(targetField));
+				MapEntry entry = fieldMappingMap
+						.get(constructFieldMappingKey(targetField));
 				if (entry != null) {
-					Field sourceField = entry
-							.getSourceField();
+					Field sourceField = entry.getSourceField();
 					Object sourceObject = sourceObjectMap.get(sourceField
 							.getDeclaringClass().getCanonicalName());
-					//recursively map the enclosed beans too
+					// recursively map the enclosed beans too
 					if (targetField.getClass().isAnnotationPresent(
 							Mappable.class)) {
-						mapBean(targetField.getClass(),
-								sourceField.getClass());
+						Object targetObject = targetField.getClass()
+								.newInstance();
+						mapBean(targetObject, sourceField.get(sourceObject));
+					} else {
+
+						targetField.set(target, sourceField.get(sourceObject));
 					}
-					targetField.set(target, sourceField.get(sourceObject));
 				}
 			}
 		} catch (IllegalArgumentException e) {
@@ -197,10 +202,12 @@ public abstract class AbstractMapper {
 			throw new UnableToMapException(
 					"Unable to map beans successfully due to an unexpected error: ",
 					e);
+		} catch (InstantiationException e) {
+			throw new UnableToMapException(
+					"Unable to map beans successfully due to an unexpected error: ",
+					e);
 		}
 
 	}
-
-	
 
 }
