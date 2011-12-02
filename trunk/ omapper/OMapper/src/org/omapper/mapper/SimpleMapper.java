@@ -3,8 +3,6 @@
  */
 package org.omapper.mapper;
 
-import java.lang.reflect.Field;
-
 import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
@@ -51,8 +49,9 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 	 *             the illegal access exception
 	 */
 	public void mapBean(T target, S source) {
-
-		mapBeanBasic(target, source);
+		
+		super.mapBean(target, source);
+		//mapBeanBasic(target, source);
 	}
 
 	/**
@@ -72,7 +71,7 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 	 *             the illegal argument exception
 	 * @throws IllegalAccessException
 	 *             the illegal access exception
-	 */
+	 *//*
 	private void mapBeanBasic(Object target, Object source) {
 
 		try {
@@ -99,7 +98,7 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 					e);
 		}
 
-	}
+	}*/
 	
 	
 }
