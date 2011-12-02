@@ -35,6 +35,9 @@ public class Bean2 {
 	/** The company name. */
 	@Source(type = Bean3.class, property = "companyName")
 	private String companyName;
+	
+	@Source(type=Bean1.class, property="child1")
+	private Child2 child2;
 
 	/**
 	 * Gets the company name.
@@ -150,12 +153,29 @@ public class Bean2 {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Bean2 [name=").append(name).append(", address=")
-				.append(address).append(", age=").append(age)
-				.append(", emp_id=").append(emp_id).append(", positionsList=")
-				.append(positionsList).append(", companyName=")
-				.append(companyName).append("]");
+		builder.append("Bean2 [name=");
+		builder.append(name);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", age=");
+		builder.append(age);
+		builder.append(", emp_id=");
+		builder.append(emp_id);
+		builder.append(", positionsList=");
+		builder.append(positionsList);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", child2=");
+		builder.append(child2);
+		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @return the child2
+	 */
+	public Child2 getChild2() {
+		return child2;
 	}
 
 }

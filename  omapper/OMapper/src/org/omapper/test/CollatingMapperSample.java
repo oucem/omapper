@@ -41,6 +41,7 @@ public class CollatingMapperSample {
 		bean1.setAge(26);
 		bean1.setEmp_id(7922510);
 		bean1.setName("Sachin");
+		bean1.setChild1(new Child1("sachin",26));
 		
 		logger.debug("Source Bean1="+bean1);
 		
