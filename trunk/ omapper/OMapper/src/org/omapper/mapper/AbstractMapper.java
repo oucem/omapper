@@ -90,10 +90,10 @@ public abstract class AbstractMapper {
 						fieldMappingMap.put(
 								constructFieldMappingKey(targetField), entry);
 
-						if (targetField.getClass().isAnnotationPresent(
+						if (targetField.getType().isAnnotationPresent(
 								Mappable.class)) {
-							initFieldMaps(targetField.getClass(),
-									sourceField.getClass());
+							initFieldMaps(targetField.getType(),
+									sourceField.getType());
 						}
 					} catch (NoSuchFieldException e) {
 						throw new UnknownPropertyException("Source Property:"
@@ -183,11 +183,12 @@ public abstract class AbstractMapper {
 					Object sourceObject = sourceObjectMap.get(sourceField
 							.getDeclaringClass().getCanonicalName());
 					// recursively map the enclosed beans too
-					if (targetField.getClass().isAnnotationPresent(
+					if (targetField.getType().isAnnotationPresent(
 							Mappable.class)) {
-						Object targetObject = targetField.getClass()
+						Object targetObject = targetField.getType()
 								.newInstance();
 						mapBean(targetObject, sourceField.get(sourceObject));
+						targetField.set(target, targetObject);
 					} else {
 
 						targetField.set(target, sourceField.get(sourceObject));
