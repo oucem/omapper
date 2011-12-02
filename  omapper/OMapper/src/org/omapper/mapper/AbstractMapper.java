@@ -16,7 +16,6 @@ import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractMapper.
  * 
@@ -26,6 +25,7 @@ public abstract class AbstractMapper {
 
 	/** The field mapping map. */
 	protected Map<String, MapEntry> fieldMappingMap;
+	
 	
 	
 	/**
@@ -66,6 +66,7 @@ public abstract class AbstractMapper {
 
 		Field[] targetFieldsArray = targetClass.getDeclaredFields();
 		for (Field targetField : targetFieldsArray) {
+			
 			targetField.setAccessible(true);
 			if (targetField.isAnnotationPresent(Source.class)) {
 				Source sourceAnnotation = targetField
@@ -89,7 +90,13 @@ public abstract class AbstractMapper {
 
 						sourceField.setAccessible(true);
 						MapEntry entry = new MapEntry(sourceField, targetField);
-						fieldMappingMap.put(targetField.getName(), entry);
+						fieldMappingMap.put(constructFieldMappingKey(targetField), entry);
+						
+						if (targetField.getClass().isAnnotationPresent(
+								Mappable.class)) {
+							initFieldMaps(targetField.getClass(),
+									sourceField.getClass());
+						}
 					} catch (NoSuchFieldException e) {
 						throw new UnknownPropertyException("Source Property:"
 								+ sourceFieldName
@@ -109,6 +116,17 @@ public abstract class AbstractMapper {
 		System.out.println(fieldMappingMap);
 
 	}
+
+	/**
+	 * @param targetField
+	 * @return
+	 */
+	private String constructFieldMappingKey(Field targetField) {
+		
+		StringBuilder key=new StringBuilder(targetField.getDeclaringClass().getCanonicalName()).append('.').append(targetField.getName());
+		return key.toString();
+	}
+
 
 	/**
 	 * Check if mappable.
@@ -156,14 +174,18 @@ public abstract class AbstractMapper {
 			Field[] targetFields = target.getClass().getDeclaredFields();
 			for (Field targetField : targetFields) {
 				targetField.setAccessible(true);
-				String fieldName = targetField.getName();
-				MapEntry entry = fieldMappingMap.get(fieldName);
+				MapEntry entry = fieldMappingMap.get(constructFieldMappingKey(targetField));
 				if (entry != null) {
-					Field sourceField = fieldMappingMap.get(fieldName)
+					Field sourceField = entry
 							.getSourceField();
 					Object sourceObject = sourceObjectMap.get(sourceField
 							.getDeclaringClass().getCanonicalName());
-					
+					//recursively map the enclosed beans too
+					if (targetField.getClass().isAnnotationPresent(
+							Mappable.class)) {
+						mapBean(targetField.getClass(),
+								sourceField.getClass());
+					}
 					targetField.set(target, sourceField.get(sourceObject));
 				}
 			}
