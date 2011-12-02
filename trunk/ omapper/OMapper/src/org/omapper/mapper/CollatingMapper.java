@@ -4,12 +4,10 @@
 package org.omapper.mapper;
 
 
-// TODO: Auto-generated Javadoc
 /**
- * This mapper is used to collate data from mutiple beans to one bean
- * 
- * @param <T>
- *            the generic type
+ * This mapper is used to collate data from mutiple beans to one bean.
+ *
+ * @param <T> the generic type
  * @author Sachin
  */
 
@@ -29,6 +27,9 @@ public class CollatingMapper<T> extends AbstractMapper {
 		super(targetClass, sourceClasses);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.omapper.mapper.AbstractMapper#mapBean(java.lang.Object, java.lang.Object[])
+	 */
 	public void mapBean(Object target, Object... source) {
 	
 		super.mapBean(target, source);
