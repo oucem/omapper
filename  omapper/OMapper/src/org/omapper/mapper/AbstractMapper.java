@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package org.omapper.mapper;
 
 import java.lang.reflect.AnnotatedElement;
@@ -13,6 +16,7 @@ import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class AbstractMapper.
  * 
@@ -107,7 +111,9 @@ public abstract class AbstractMapper {
 	}
 
 	/**
-	 * @param annotatedElements
+	 * Check if mappable.
+	 *
+	 * @param annotatedElements the annotated elements
 	 */
 	protected void checkIfMappable(AnnotatedElement... annotatedElements) {
 
@@ -126,21 +132,9 @@ public abstract class AbstractMapper {
 
 	/**
 	 * Map bean.
-	 * 
-	 * @param target
-	 *            the target
-	 * @param source
-	 *            the source
-	 * @throws UnableToMapException
-	 *             the unable to map exception
-	 * @throws UnknownPropertyException
-	 *             the unknown property exception
-	 * @throws UnknownTypeException
-	 *             the unknown type exception
-	 * @throws IllegalArgumentException
-	 *             the illegal argument exception
-	 * @throws IllegalAccessException
-	 *             the illegal access exception
+	 *
+	 * @param target the target
+	 * @param source the source
 	 */
 	protected void mapBean(Object target, Object... source) {
 		try {
@@ -169,6 +163,7 @@ public abstract class AbstractMapper {
 							.getSourceField();
 					Object sourceObject = sourceObjectMap.get(sourceField
 							.getDeclaringClass().getCanonicalName());
+					
 					targetField.set(target, sourceField.get(sourceObject));
 				}
 			}

@@ -7,13 +7,12 @@ import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
 
+// TODO: Auto-generated Javadoc
 /**
- * This mapper maps one bean class to another
- * 
- * @param <T>
- *            the generic type for target bean
- * @param <S>
- *            the generic type for source bean
+ * This mapper maps one bean class to another.
+ *
+ * @param <T> the generic type for target bean
+ * @param <S> the generic type for source bean
  * @author Sachin
  */
 public class SimpleMapper<T, S> extends AbstractMapper {
@@ -32,21 +31,9 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 
 	/**
 	 * Map bean.
-	 * 
-	 * @param target
-	 *            the target
-	 * @param source
-	 *            the source
-	 * @throws UnableToMapException
-	 *             the unable to map exception
-	 * @throws UnknownPropertyException
-	 *             the unknown property exception
-	 * @throws UnknownTypeException
-	 *             the unknown type exception
-	 * @throws IllegalArgumentException
-	 *             the illegal argument exception
-	 * @throws IllegalAccessException
-	 *             the illegal access exception
+	 *
+	 * @param target the target
+	 * @param source the source
 	 */
 	public void mapBean(T target, S source) {
 		
