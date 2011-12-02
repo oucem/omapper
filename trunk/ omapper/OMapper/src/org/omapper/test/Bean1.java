@@ -19,6 +19,8 @@ public class Bean1 {
 	/** The emp_id. */
 	private Integer emp_id;
 	
+	private Child1 child1;
+	
 	/**
 	 * Gets the name.
 	 *
@@ -100,10 +102,32 @@ public class Bean1 {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Bean1 [name=").append(name).append(", address=")
-				.append(address).append(", age=").append(age)
-				.append(", emp_id=").append(emp_id).append("]");
+		builder.append("Bean1 [name=");
+		builder.append(name);
+		builder.append(", address=");
+		builder.append(address);
+		builder.append(", age=");
+		builder.append(age);
+		builder.append(", emp_id=");
+		builder.append(emp_id);
+		builder.append(", child1=");
+		builder.append(child1);
+		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @return the child1
+	 */
+	public Child1 getChild1() {
+		return child1;
+	}
+
+	/**
+	 * @param child1 the child1 to set
+	 */
+	public void setChild1(Child1 child1) {
+		this.child1 = child1;
 	}
 	
 }
