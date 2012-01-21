@@ -24,7 +24,7 @@ import org.omapper.exception.UnknownTypeException;
 public abstract class AbstractMapper {
 
 	/** The field mapping map. */
-	protected Map<String, MapEntry> fieldMappingMap;
+	protected final Map<String, MapEntry> fieldMappingMap;
 
 	/**
 	 * Instantiates a new abstract mapper.
