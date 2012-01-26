@@ -1,6 +1,7 @@
 package org.omapper.test.simple;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -44,6 +45,7 @@ public class SimpleMapperSample {
 		logger.debug("Sample program starts");
 
 		logger.debug("Simple Mapper Dempo.....Starts");
+		
 		/* Sample for Simple Mapper */
 		SimpleMapper<Bean2, Bean1> mapper = new SimpleMapper<Bean2, Bean1>(
 				Bean2.class, Bean1.class);
@@ -53,8 +55,12 @@ public class SimpleMapperSample {
 		Child1 child1=new Child1();
 		child1.setAge(10);
 		child1.setName("Junior Sachin");
-		List<Child1> child1List=new ArrayList<Child1>();
+		Child1 child2=new Child1();
+		child2.setAge(11);
+		child2.setName("Junior Vipin");
+		List<Child1> child1List=new LinkedList<Child1>();
 		child1List.add(child1);
+		child1List.add(child2);
 		bean1.setChild(child1);
 		bean1.setChildList(child1List);
 		
