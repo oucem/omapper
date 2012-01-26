@@ -19,16 +19,17 @@ import java.lang.annotation.Target;
 public @interface Source {
 	
 	/**
-	 * Type-This value defines the source class
-	 *
+	 * Type-This value defines the source class.
+	 * 
 	 * @return the class
 	 */
 	@SuppressWarnings("rawtypes")
 	public Class type();
 	
 	/**
-	 * Property-This value defines the property value which corresponds to mapped value
-	 *
+	 * Property-This value defines the property value which corresponds to
+	 * mapped value.
+	 * 
 	 * @return the string
 	 */
 	public String property();
