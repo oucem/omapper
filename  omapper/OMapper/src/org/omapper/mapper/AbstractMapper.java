@@ -3,14 +3,22 @@
  */
 package org.omapper.mapper;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
+import org.omapper.exception.IncompatibleFieldsException;
 import org.omapper.exception.NonMappableTargetBeanException;
 import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
@@ -87,13 +95,35 @@ public abstract class AbstractMapper {
 
 						sourceField.setAccessible(true);
 						MapEntry entry = new MapEntry(sourceField, targetField);
-						fieldMappingMap.put(
-								constructFieldMappingKey(targetField), entry);
-
+						String fieldMappingKey = constructFieldMappingKey(targetField);
+						if (!fieldMappingMap.containsKey(fieldMappingKey)) {
+							fieldMappingMap.put(fieldMappingKey, entry);
+						}
 						if (targetField.getType().isAnnotationPresent(
 								Mappable.class)) {
 							initFieldMaps(targetField.getType(),
 									sourceField.getType());
+						} else if (Collection.class
+								.isAssignableFrom(targetField.getType())
+								|| Map.class.isAssignableFrom(targetField
+										.getType())) {
+							if ((targetField.getGenericType() == targetField
+									.getType())
+									&& (sourceField.getGenericType() == sourceField
+											.getType())) {
+								System.out
+										.println("Found non parameterized collections field:"
+												+ targetField
+												+ " skipping it as not supported yet");
+							} else {
+								initFieldMaps(
+										(ParameterizedType) targetField
+												.getGenericType(),
+										(ParameterizedType) sourceField
+												.getGenericType());
+
+							}
+
 						}
 					} catch (NoSuchFieldException e) {
 						throw new UnknownPropertyException("Source Property:"
@@ -115,6 +145,18 @@ public abstract class AbstractMapper {
 
 	}
 
+	
+
+	private void checkIfCompatible(Field sourceField, Field targetField) throws IncompatibleFieldsException {
+		
+		if(!(targetField.getType().isAssignableFrom(sourceField.getType())))
+		{
+			throw new IncompatibleFieldsException("Source Field:"+sourceField.getName()+" Type:"+sourceField.getType()+" is not compatible with target field:"+targetField.getName()+" of Type:"+targetField.getType());
+		}
+			
+		
+	}
+
 	/**
 	 * @param targetField
 	 * @return
@@ -129,23 +171,23 @@ public abstract class AbstractMapper {
 	/**
 	 * Check if mappable.
 	 * 
-	 * @param annotatedElements
+	 * @param annotatedElement
 	 *            the annotated elements
 	 */
-	protected void checkIfMappable(AnnotatedElement... annotatedElements) {
+	protected void checkIfMappable(AnnotatedElement annotatedElement) {
 
-		if (annotatedElements != null) {
-			for (AnnotatedElement element : annotatedElements) {
-				if (!element.isAnnotationPresent(Mappable.class)) {
-					throw new NonMappableTargetBeanException(
-							"Target Bean Class:"
-									+ element
-									+ " is not mappable.\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
-				}
+		if (annotatedElement != null) {
+			if (!annotatedElement.isAnnotationPresent(Mappable.class)) {
+				throw new NonMappableTargetBeanException(
+						"Target Bean Class:"
+								+ annotatedElement
+								+ " is not mappable.\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
 			}
+			
 		}
-
 	}
+
+	
 
 	/**
 	 * Map bean.
@@ -185,11 +227,19 @@ public abstract class AbstractMapper {
 					// recursively map the enclosed beans too
 					if (targetField.getType().isAnnotationPresent(
 							Mappable.class)) {
-						Object targetObject = targetField.getType()
-								.newInstance();
+						Object targetObject = createTargetFieldInstance(targetField);
 						mapBean(targetObject, sourceField.get(sourceObject));
 						targetField.set(target, targetObject);
-					} else {
+					} else if(Collection.class.isAssignableFrom(targetField.getType()) || Map.class.isAssignableFrom(targetField.getType()))
+					{
+						Object targetObject=createTargetFieldInstance(targetField);
+						mapCollectionBeans(targetObject,sourceObject,targetField,sourceField);
+						targetField.set(target, targetObject);
+						//To be done
+						
+					}
+					else
+					{
 
 						targetField.set(target, sourceField.get(sourceObject));
 					}
@@ -210,5 +260,84 @@ public abstract class AbstractMapper {
 		}
 
 	}
+	
+	
+	private Object createTargetFieldInstance(Field targetField) throws InstantiationException, IllegalAccessException
+	{
+		Object targetObject=null;
+		if(targetField.getType().isInterface() || Modifier.isAbstract(targetField.getType().getModifiers()))
+		{
+			if(targetField.isAnnotationPresent(Implementation.class))
+			{
+				Implementation interfaceAnnot=targetField.getAnnotation(Implementation.class);
+				Class interfaceImpl=interfaceAnnot.name();
+				targetObject=interfaceImpl.newInstance();
+			}
+			else
+			{
+				throw new UnknownTypeException("Type of target field could not be determined, use @interface annotaion to specify implementation type for interface types");
+			}
+			
+		}
+		else
+		{
+			targetObject= targetField.getType().newInstance();
+		}
+		
+		return targetObject;
+	}
+	
+	/** Overloaded Methods to initialize field map for parameterized bean classes  like collections and maps etc.
+	 * @param genericTypeTarget
+	 * @param genericTypeSource
+	 */
+	private void initFieldMaps(ParameterizedType genericTypeTarget, ParameterizedType genericTypeSource) {
+		
+		Type[] targetFieldTypes=genericTypeTarget.getActualTypeArguments();
+		Type[] sourceFieldTypes=genericTypeSource.getActualTypeArguments();
+		if(targetFieldTypes.length!=sourceFieldTypes.length)
+		{
+			throw new IncompatibleFieldsException("Paramterized target type :"+genericTypeTarget+ " is not compatible with source type:"+genericTypeSource);
+		}
+		
+		for(int typeCount=0;typeCount<targetFieldTypes.length;typeCount++)
+		{
+			initFieldMaps((Class)targetFieldTypes[typeCount], (Class)sourceFieldTypes[typeCount]);
+		}
+	}
+	
+
+	/**
+	 * This method maps collection fields
+	 * 
+	 * @param targetObject
+	 * @param sourceObject
+	 * @param targetField
+	 * @param sourceField
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void mapCollectionBeans(Object targetObject, Object sourceObject,
+			Field targetField, Field sourceField)
+			throws InstantiationException, IllegalAccessException {
+		// TODO Auto-generated method stub
+		ParameterizedType targetFieldType = (ParameterizedType) targetField
+				.getGenericType();
+
+		Collection targetCollection = (Collection) targetObject;
+		Collection sourceCollection = (Collection) sourceField
+				.get(sourceObject);
+		Iterator sourceIterator = sourceCollection.iterator();
+		while (sourceIterator.hasNext()) {
+			Object targetCollectionElementObject = ((Class) targetFieldType
+					.getActualTypeArguments()[0]).newInstance();
+			mapBean(targetCollectionElementObject, sourceIterator.next());
+			targetCollection.add(targetCollectionElementObject);
+		}
+		
+
+	}
+	
 
 }
