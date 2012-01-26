@@ -23,6 +23,7 @@ public @interface Source {
 	 *
 	 * @return the class
 	 */
+	@SuppressWarnings("rawtypes")
 	public Class type();
 	
 	/**
