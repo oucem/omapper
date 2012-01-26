@@ -1,13 +1,14 @@
 package org.omapper.test;
 
 public class Child1 {
-	
-	private String  childName;
+
+	private String childName;
 	private int childAge;
-	
-	public Child1(){
-		
+
+	public Child1() {
+
 	}
+
 	public Child1(String childName, int childAge) {
 		super();
 		this.childName = childName;
@@ -27,7 +28,10 @@ public class Child1 {
 	public int getChildAge() {
 		return childAge;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -40,6 +44,5 @@ public class Child1 {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 
 }

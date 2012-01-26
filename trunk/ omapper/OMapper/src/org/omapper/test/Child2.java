@@ -5,13 +5,15 @@ import org.omapper.annotations.Source;
 
 @Mappable
 public class Child2 {
-	
-	@Source(type=Child1.class,property="childName")
-	private String  childName;
-	@Source(type=Child1.class,property="childAge")
+
+	@Source(type = Child1.class, property = "childName")
+	private String childName;
+	@Source(type = Child1.class, property = "childAge")
 	private int childAge;
-	
-	public Child2(){};
+
+	public Child2() {
+	};
+
 	public Child2(String childName, int childAge) {
 		super();
 		this.childName = childName;
@@ -31,7 +33,10 @@ public class Child2 {
 	public int getChildAge() {
 		return childAge;
 	}
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
