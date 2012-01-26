@@ -55,7 +55,9 @@ public class SimpleMapperSample {
 		child1.setName("Junior Sachin");
 		List<Child1> child1List=new ArrayList<Child1>();
 		child1List.add(child1);
-
+		bean1.setChild(child1);
+		bean1.setChildList(child1List);
+		
 		logger.debug("Bean1=" + bean1);
 		Bean2 bean2 = new Bean2();
 
