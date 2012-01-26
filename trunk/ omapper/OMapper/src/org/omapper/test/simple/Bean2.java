@@ -1,7 +1,9 @@
 package org.omapper.test.simple;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
 
@@ -15,6 +17,7 @@ public class Bean2 {
 	@Source(type=Bean1.class,property="child")
 	private Child2 child;
 	@Source(type=Bean1.class,property="childList")
+	@Implementation(name=ArrayList.class)
 	private List<Child2> childList;
 	
 	/**
