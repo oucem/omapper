@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package org.omapper.exception;
 
 // TODO: Auto-generated Javadoc

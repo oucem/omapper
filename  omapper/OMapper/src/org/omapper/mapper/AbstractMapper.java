@@ -3,7 +3,6 @@
  */
 package org.omapper.mapper;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -147,6 +146,16 @@ public abstract class AbstractMapper {
 
 	
 
+	/**
+	 * Check if compatible.
+	 * 
+	 * @param sourceField
+	 *            the source field
+	 * @param targetField
+	 *            the target field
+	 * @throws IncompatibleFieldsException
+	 *             the incompatible fields exception
+	 */
 	private void checkIfCompatible(Field sourceField, Field targetField) throws IncompatibleFieldsException {
 		
 		if(!(targetField.getType().isAssignableFrom(sourceField.getType())))
@@ -158,8 +167,11 @@ public abstract class AbstractMapper {
 	}
 
 	/**
+	 * Construct field mapping key.
+	 * 
 	 * @param targetField
-	 * @return
+	 *            the target field
+	 * @return the string
 	 */
 	private String constructFieldMappingKey(Field targetField) {
 
@@ -196,7 +208,6 @@ public abstract class AbstractMapper {
 	 *            the target
 	 * @param source
 	 *            the source
-	 * @throws InstantiationException
 	 */
 	protected void mapBean(Object target, Object... source) {
 		try {
@@ -262,6 +273,17 @@ public abstract class AbstractMapper {
 	}
 	
 	
+	/**
+	 * Creates the target field instance.
+	 * 
+	 * @param targetField
+	 *            the target field
+	 * @return the object
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 */
 	private Object createTargetFieldInstance(Field targetField) throws InstantiationException, IllegalAccessException
 	{
 		Object targetObject=null;
@@ -287,9 +309,14 @@ public abstract class AbstractMapper {
 		return targetObject;
 	}
 	
-	/** Overloaded Methods to initialize field map for parameterized bean classes  like collections and maps etc.
+	/**
+	 * Overloaded Methods to initialize field map for parameterized bean classes
+	 * like collections and maps etc.
+	 * 
 	 * @param genericTypeTarget
+	 *            the generic type target
 	 * @param genericTypeSource
+	 *            the generic type source
 	 */
 	private void initFieldMaps(ParameterizedType genericTypeTarget, ParameterizedType genericTypeSource) {
 		
@@ -308,14 +335,20 @@ public abstract class AbstractMapper {
 	
 
 	/**
-	 * This method maps collection fields
+	 * This method maps collection fields.
 	 * 
 	 * @param targetObject
+	 *            the target object
 	 * @param sourceObject
+	 *            the source object
 	 * @param targetField
+	 *            the target field
 	 * @param sourceField
-	 * @throws IllegalAccessException
+	 *            the source field
 	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void mapCollectionBeans(Object targetObject, Object sourceObject,

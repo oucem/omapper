@@ -1,29 +1,52 @@
+/*
+ * 
+ */
 package org.omapper.test.simple;
 
+/**
+ * The Class Child1.
+ */
 public class Child1 {
 
+	/** The name. */
 	private String name;
+	
+	/** The age. */
 	private int age;
+	
 	/**
+	 * Gets the name.
+	 * 
 	 * @return the name
 	 */
 	public String getName() {
 		return name;
 	}
+	
 	/**
-	 * @param name the name to set
+	 * Sets the name.
+	 * 
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	/**
+	 * Gets the age.
+	 * 
 	 * @return the age
 	 */
 	public int getAge() {
 		return age;
 	}
+	
 	/**
-	 * @param age the age to set
+	 * Sets the age.
+	 * 
+	 * @param age
+	 *            the age to set
 	 */
 	public void setAge(int age) {
 		this.age = age;

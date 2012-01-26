@@ -1,15 +1,30 @@
+/*
+ * 
+ */
 package org.omapper.test.simple;
 
 import java.util.List;
 
+/**
+ * The Class Bean1.
+ */
 public class Bean1 {
 
+	/** The i. */
 	private int i;
+	
+	/** The x. */
 	private String x;
+	
+	/** The child. */
 	private Child1 child;
+	
+	/** The child list. */
 	private List<Child1> childList;
 
 	/**
+	 * Gets the i.
+	 * 
 	 * @return the i
 	 */
 	public int getI() {
@@ -17,6 +32,8 @@ public class Bean1 {
 	}
 
 	/**
+	 * Sets the i.
+	 * 
 	 * @param i
 	 *            the i to set
 	 */
@@ -25,6 +42,8 @@ public class Bean1 {
 	}
 
 	/**
+	 * Gets the x.
+	 * 
 	 * @return the x
 	 */
 	public String getX() {
@@ -32,6 +51,8 @@ public class Bean1 {
 	}
 
 	/**
+	 * Sets the x.
+	 * 
 	 * @param x
 	 *            the x to set
 	 */
@@ -40,6 +61,8 @@ public class Bean1 {
 	}
 
 	/**
+	 * Gets the child.
+	 * 
 	 * @return the child
 	 */
 	public Child1 getChild() {
@@ -47,6 +70,8 @@ public class Bean1 {
 	}
 
 	/**
+	 * Sets the child.
+	 * 
 	 * @param child
 	 *            the child to set
 	 */
@@ -55,6 +80,8 @@ public class Bean1 {
 	}
 
 	/**
+	 * Gets the child list.
+	 * 
 	 * @return the childList
 	 */
 	public List<Child1> getChildList() {
@@ -62,6 +89,8 @@ public class Bean1 {
 	}
 
 	/**
+	 * Sets the child list.
+	 * 
 	 * @param childList
 	 *            the childList to set
 	 */

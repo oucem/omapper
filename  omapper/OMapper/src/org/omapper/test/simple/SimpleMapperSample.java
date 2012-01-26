@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package org.omapper.test.simple;
 
 import java.util.ArrayList;
