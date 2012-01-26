@@ -13,9 +13,9 @@ public class Bean2 {
 	@Source(type=Bean1.class,property="x")
 	private String x;
 	@Source(type=Bean1.class,property="child")
-	private Child1 child;
+	private Child2 child;
 	@Source(type=Bean1.class,property="childList")
-	private List<Child1> childList;
+	private List<Child2> childList;
 	
 	/**
 	 * @return the i
@@ -44,25 +44,25 @@ public class Bean2 {
 	/**
 	 * @return the child1
 	 */
-	public Child1 getChild() {
+	public Child2 getChild() {
 		return child;
 	}
 	/**
 	 * @param child1 the child1 to set
 	 */
-	public void setChild(Child1 child) {
+	public void setChild(Child2 child) {
 		this.child = child;
 	}
 	/**
 	 * @return the child1List
 	 */
-	public List<Child1> getChildList() {
+	public List<Child2> getChildList() {
 		return childList;
 	}
 	/**
 	 * @param child1List the child1List to set
 	 */
-	public void setChildList(List<Child1> childList) {
+	public void setChildList(List<Child2> childList) {
 		this.childList = childList;
 	}
 	/* (non-Javadoc)
