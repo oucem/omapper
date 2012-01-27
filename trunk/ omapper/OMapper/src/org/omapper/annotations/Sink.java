@@ -8,15 +8,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+
 /**
  * The Annotation Source.
- * 
+ *
  * @author Sachin
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Sink {
-
+	
 	/**
 	 * Type-This value defines the source class.
 	 * 
@@ -24,7 +25,7 @@ public @interface Sink {
 	 */
 	@SuppressWarnings("rawtypes")
 	public Class type();
-
+	
 	/**
 	 * Property-This value defines the property value which corresponds to
 	 * mapped value.
@@ -32,7 +33,9 @@ public @interface Sink {
 	 * @return the string
 	 */
 	public String property();
-
+	
+	
+	
 	
 
 }
