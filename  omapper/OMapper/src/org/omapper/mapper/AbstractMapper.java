@@ -11,6 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -18,6 +19,9 @@ import java.util.Map;
 import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
+import org.omapper.enums.FieldType;
+import org.omapper.enums.MapperType;
+import org.omapper.enums.MappingType;
 import org.omapper.exception.IncompatibleFieldsException;
 import org.omapper.exception.NonMappableTargetBeanException;
 import org.omapper.exception.UnableToMapException;
@@ -30,6 +34,7 @@ import org.omapper.util.MapperUtil;
  * 
  * @author Sachin
  */
+@SuppressWarnings("rawtypes")
 public abstract class AbstractMapper {
 
 	/** The field mapping map. */
@@ -62,19 +67,52 @@ public abstract class AbstractMapper {
 	@SuppressWarnings("rawtypes")
 	protected void initFieldMaps(Class targetClass, Class... sourceClass) {
 
-		MapperUtil.checkIfMappable(targetClass);
-
 		Map<String, Class> sourceClassMap = new HashMap<String, Class>();
 
 		for (Class source : sourceClass) {
 			sourceClassMap.put(source.getCanonicalName(), source);
 		}
 
+		MappingType mappingType = getMappingType(targetClass, sourceClass);
+
+		switch (mappingType) {
+		case SOURCE:
+			initFieldMapFromSource(targetClass, sourceClassMap);
+			break;
+		case TARGET:
+			initFieldMapFromTarget(targetClass, sourceClassMap);
+			break;
+		}
+
+		System.out.println(fieldMappingMap);
+
+	}
+
+	
+
+	private void initFieldMapFromSource( Class targetClass,
+			Map<String, Class> sourceClassMap) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void initFieldMapFromTarget(Class targetClass,
+			Map<String, Class> sourceClassMap) {
 		Field[] targetFieldsArray = targetClass.getDeclaredFields();
 		for (Field targetField : targetFieldsArray) {
 
+			String targetFieldName = targetField.getName();
 			targetField.setAccessible(true);
-			if (targetField.isAnnotationPresent(Source.class)) {
+
+			FieldType fieldType = MapperUtil.getFieldType(targetField);
+			System.out.println("Found target Field:" + targetFieldName
+					+ " of type:" + fieldType);
+
+			if (!targetField.isAnnotationPresent(Source.class)) {
+
+				System.out.println("No annotation mapping found for field:"
+						+ targetField + " so skipping it");
+			} else {
 				Source sourceAnnotation = targetField
 						.getAnnotation(Source.class);
 				if (null != sourceAnnotation) {
@@ -86,7 +124,7 @@ public abstract class AbstractMapper {
 								"The source class in annotation :"
 										+ sourceClassName
 										+ " is not valid, valid values for the type: "
-										+ Arrays.toString(sourceClass));
+										+ sourceClassMap.keySet());
 
 					}
 
@@ -96,7 +134,8 @@ public abstract class AbstractMapper {
 
 						sourceField.setAccessible(true);
 						MapEntry entry = new MapEntry(sourceField, targetField);
-						String fieldMappingKey = MapperUtil.constructFieldMappingKey(targetField);
+						String fieldMappingKey = MapperUtil
+								.constructFieldMappingKey(targetField);
 						if (!fieldMappingMap.containsKey(fieldMappingKey)) {
 							fieldMappingMap.put(fieldMappingKey, entry);
 						}
@@ -141,22 +180,12 @@ public abstract class AbstractMapper {
 								+ sourceClassName);
 					}
 				}
-			} else {
-				System.out.println("No annotation mapping found for field:"
-						+ targetField + " so skipping it");
 			}
 
 		}
 
-		System.out.println(fieldMappingMap);
-
 	}
 
-	
-
-	
-
-	
 	/**
 	 * Map bean.
 	 * 
@@ -185,8 +214,8 @@ public abstract class AbstractMapper {
 			Field[] targetFields = target.getClass().getDeclaredFields();
 			for (Field targetField : targetFields) {
 				targetField.setAccessible(true);
-				MapEntry entry = fieldMappingMap
-						.get(MapperUtil.constructFieldMappingKey(targetField));
+				MapEntry entry = fieldMappingMap.get(MapperUtil
+						.constructFieldMappingKey(targetField));
 				if (entry != null) {
 					Field sourceField = entry.getSourceField();
 					Object sourceObject = sourceObjectMap.get(sourceField
@@ -194,14 +223,16 @@ public abstract class AbstractMapper {
 					// recursively map the enclosed beans too
 					if (targetField.getType().isAnnotationPresent(
 							Mappable.class)) {
-						Object targetObject = MapperUtil.createTargetFieldInstance(targetField);
+						Object targetObject = MapperUtil
+								.createTargetFieldInstance(targetField);
 						mapBean(targetObject, sourceField.get(sourceObject));
 						targetField.set(target, targetObject);
 					} else if (Collection.class.isAssignableFrom(targetField
 							.getType())
 							|| Map.class
 									.isAssignableFrom(targetField.getType())) {
-						Object targetObject = MapperUtil.createTargetFieldInstance(targetField);
+						Object targetObject = MapperUtil
+								.createTargetFieldInstance(targetField);
 						mapCollectionBeans(targetObject, sourceObject,
 								targetField, sourceField);
 						targetField.set(target, targetObject);
@@ -209,9 +240,10 @@ public abstract class AbstractMapper {
 
 					} else if (targetField.getType().isArray()
 							&& sourceField.getType().isArray()) {
-						Object targetObject = MapperUtil.createTargetFieldArrayInstance(
-								targetField,
-								Array.getLength(sourceField.get(sourceObject)));
+						Object targetObject = MapperUtil
+								.createTargetFieldArrayInstance(targetField,
+										Array.getLength(sourceField
+												.get(sourceObject)));
 						mapArrayBeans(targetObject, sourceObject, targetField,
 								sourceField);
 						targetField.set(target, targetObject);
@@ -236,8 +268,6 @@ public abstract class AbstractMapper {
 		}
 
 	}
-
-	
 
 	/**
 	 * Overloaded Methods to initialize field map for parameterized bean classes
@@ -312,15 +342,33 @@ public abstract class AbstractMapper {
 	private void mapArrayBeans(Object targetObject, Object sourceObject,
 			Field targetField, Field sourceField) {
 
-		Object targetArray = targetObject;
-		Object sourceArray = sourceField.get(sourceObject);
-		while (sourceIterator.hasNext()) {
-			Object targetCollectionElementObject = ((Class) targetFieldType
-					.getActualTypeArguments()[0]).newInstance();
-			mapBean(targetCollectionElementObject, sourceIterator.next());
-			targetCollection.add(targetCollectionElementObject);
-		}
+		
 
 	}
 
+	
+	private MappingType getMappingType(Class<?> targetClass,
+			Class<?>[] sourceClass) {
+
+		if (targetClass.isAnnotationPresent(Mappable.class)) {
+			return MappingType.TARGET;
+		} else {
+			boolean isMappable = true;
+			for (Class<?> source : sourceClass) {
+				if (!source.isAnnotationPresent(Mappable.class)) {
+					isMappable = false;
+				}
+			}
+
+			if (isMappable) {
+				return MappingType.SOURCE;
+			} else {
+				throw new NonMappableTargetBeanException(
+						"Either target bean Class or all the source bean classes MUST be mappable."
+
+								+ "\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
+
+			}
+		}
+	}
 }
