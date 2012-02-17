@@ -33,6 +33,9 @@ public class Bean2 {
 	@Implementation(name=ArrayList.class)
 	private List<Child2> childList;
 	
+	@Source(type=Bean1.class,property="childArray")
+	private Child2[] childArray;
+	
 	/**
 	 * Gets the i.
 	 * 
@@ -124,5 +127,12 @@ public class Bean2 {
 		builder.append(childList);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @return the childArray
+	 */
+	public Child2[] getChildArray() {
+		return childArray;
 	}
 }

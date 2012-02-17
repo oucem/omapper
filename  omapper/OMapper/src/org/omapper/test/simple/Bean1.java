@@ -21,6 +21,8 @@ public class Bean1 {
 	
 	/** The child list. */
 	private List<Child1> childList;
+	
+	private Child1[] childArray;
 
 	/**
 	 * Gets the i.
@@ -114,6 +116,20 @@ public class Bean1 {
 		builder.append(childList);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	/**
+	 * @return the childArray
+	 */
+	public Child1[] getChildArray() {
+		return childArray;
+	}
+
+	/**
+	 * @param childArray the childArray to set
+	 */
+	public void setChildArray(Child1[] childArray) {
+		this.childArray = childArray;
 	}
 
 }
