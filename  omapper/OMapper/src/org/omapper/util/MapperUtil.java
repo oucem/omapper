@@ -23,6 +23,7 @@ import org.omapper.exception.UnknownTypeException;
  *
  * @author Sachin
  */
+
 public class MapperUtil {
 
 	/**
