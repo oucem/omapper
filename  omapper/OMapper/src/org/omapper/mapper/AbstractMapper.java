@@ -3,24 +3,18 @@
  */
 package org.omapper.mapper;
 
-import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
 import org.omapper.enums.FieldType;
-import org.omapper.enums.MapperType;
 import org.omapper.enums.MappingType;
 import org.omapper.exception.IncompatibleFieldsException;
 import org.omapper.exception.NonMappableTargetBeanException;
@@ -88,9 +82,7 @@ public abstract class AbstractMapper {
 
 	}
 
-	
-
-	private void initFieldMapFromSource( Class targetClass,
+	private void initFieldMapFromSource(Class targetClass,
 			Map<String, Class> sourceClassMap) {
 		// TODO Auto-generated method stub
 
@@ -113,8 +105,29 @@ public abstract class AbstractMapper {
 				System.out.println("No annotation mapping found for field:"
 						+ targetField + " so skipping it");
 			} else {
+
 				Source sourceAnnotation = targetField
 						.getAnnotation(Source.class);
+				if(null==sourceAnnotation)
+				{
+					System.out.println("No source annotation found for field :"+targetField+" so skipping it");
+					continue;
+				}
+				else{
+					
+				}
+				
+				switch (fieldType) {
+				case ARRAY:
+				case COLLECTION:
+				case ENUM:
+				case JAVA:
+				case MAP:
+				case TEMPLATE:
+				case USER:
+
+				}
+
 				if (null != sourceAnnotation) {
 					String sourceFieldName = sourceAnnotation.property();
 					Class sourceClassName = sourceAnnotation.type();
@@ -342,11 +355,8 @@ public abstract class AbstractMapper {
 	private void mapArrayBeans(Object targetObject, Object sourceObject,
 			Field targetField, Field sourceField) {
 
-		
-
 	}
 
-	
 	private MappingType getMappingType(Class<?> targetClass,
 			Class<?>[] sourceClass) {
 
