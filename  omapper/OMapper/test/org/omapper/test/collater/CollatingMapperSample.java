@@ -1,6 +1,3 @@
-/*
- * 
- */
 package org.omapper.test.collater;
 
 import java.util.ArrayList;
