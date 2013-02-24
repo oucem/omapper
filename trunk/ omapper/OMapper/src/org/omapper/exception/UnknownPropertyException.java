@@ -3,11 +3,17 @@
  */
 package org.omapper.exception;
 
+import org.apache.log4j.Logger;
+
 // TODO: Auto-generated Javadoc
 /**
  * The Class UnknownPropertyException.
  */
 public class UnknownPropertyException extends RuntimeException{
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(UnknownPropertyException.class);
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;

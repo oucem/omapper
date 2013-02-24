@@ -3,6 +3,8 @@
  */
 package org.omapper.mapper;
 
+import org.apache.log4j.Logger;
+
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -30,6 +32,10 @@ import org.omapper.util.MapperUtil;
  */
 @SuppressWarnings("rawtypes")
 public abstract class AbstractMapper {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(AbstractMapper.class);
 
 	/** The field mapping map. */
 	protected final Map<String, MapEntry> fieldMappingMap;
@@ -60,6 +66,9 @@ public abstract class AbstractMapper {
 	 */
 	@SuppressWarnings("rawtypes")
 	protected void initFieldMaps(Class targetClass, Class... sourceClass) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("initFieldMaps(Class, Class) - start"); //$NON-NLS-1$
+		}
 
 		Map<String, Class> sourceClassMap = new HashMap<String, Class>();
 
@@ -80,6 +89,9 @@ public abstract class AbstractMapper {
 
 		System.out.println(fieldMappingMap);
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("initFieldMaps(Class, Class) - end"); //$NON-NLS-1$
+		}
 	}
 
 	private void initFieldMapFromSource(Class targetClass,
@@ -90,6 +102,10 @@ public abstract class AbstractMapper {
 
 	private void initFieldMapFromTarget(Class targetClass,
 			Map<String, Class> sourceClassMap) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("initFieldMapFromTarget(Class, Map<String,Class>) - start"); //$NON-NLS-1$
+		}
+
 		Field[] targetFieldsArray = targetClass.getDeclaredFields();
 		for (Field targetField : targetFieldsArray) {
 
@@ -184,6 +200,8 @@ public abstract class AbstractMapper {
 
 						}
 					} catch (NoSuchFieldException e) {
+						logger.error("initFieldMapFromTarget(Class, Map<String,Class>)", e); //$NON-NLS-1$
+
 						throw new UnknownPropertyException("Source Property:"
 								+ sourceFieldName
 								+ " defined in annotation for field :"
@@ -196,6 +214,9 @@ public abstract class AbstractMapper {
 
 		}
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("initFieldMapFromTarget(Class, Map<String,Class>) - end"); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -207,6 +228,10 @@ public abstract class AbstractMapper {
 	 *            the source
 	 */
 	protected void mapBean(Object target, Object... source) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapBean(Object, Object) - start"); //$NON-NLS-1$
+		}
+
 		try {
 			Map<String, Object> sourceObjectMap = new HashMap<String, Object>();
 
@@ -266,19 +291,28 @@ public abstract class AbstractMapper {
 				}
 			}
 		} catch (IllegalArgumentException e) {
+			logger.error("mapBean(Object, Object)", e); //$NON-NLS-1$
+
 			throw new UnableToMapException(
 					"Unable to map beans successfully due to an unexpected error: ",
 					e);
 		} catch (IllegalAccessException e) {
+			logger.error("mapBean(Object, Object)", e); //$NON-NLS-1$
+
 			throw new UnableToMapException(
 					"Unable to map beans successfully due to an unexpected error: ",
 					e);
 		} catch (InstantiationException e) {
+			logger.error("mapBean(Object, Object)", e); //$NON-NLS-1$
+
 			throw new UnableToMapException(
 					"Unable to map beans successfully due to an unexpected error: ",
 					e);
 		}
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapBean(Object, Object) - end"); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -292,6 +326,9 @@ public abstract class AbstractMapper {
 	 */
 	private void initFieldMaps(ParameterizedType genericTypeTarget,
 			ParameterizedType genericTypeSource) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("initFieldMaps(ParameterizedType, ParameterizedType) - start"); //$NON-NLS-1$
+		}
 
 		Type[] targetFieldTypes = genericTypeTarget.getActualTypeArguments();
 		Type[] sourceFieldTypes = genericTypeSource.getActualTypeArguments();
@@ -305,6 +342,10 @@ public abstract class AbstractMapper {
 		for (int typeCount = 0; typeCount < targetFieldTypes.length; typeCount++) {
 			initFieldMaps((Class) targetFieldTypes[typeCount],
 					(Class) sourceFieldTypes[typeCount]);
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("initFieldMaps(ParameterizedType, ParameterizedType) - end"); //$NON-NLS-1$
 		}
 	}
 
@@ -328,6 +369,10 @@ public abstract class AbstractMapper {
 	private void mapCollectionBeans(Object targetObject, Object sourceObject,
 			Field targetField, Field sourceField)
 			throws InstantiationException, IllegalAccessException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapCollectionBeans(Object, Object, Field, Field) - start"); //$NON-NLS-1$
+		}
+
 		// TODO Auto-generated method stub
 		ParameterizedType targetFieldType = (ParameterizedType) targetField
 				.getGenericType();
@@ -343,6 +388,9 @@ public abstract class AbstractMapper {
 			targetCollection.add(targetCollectionElementObject);
 		}
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapCollectionBeans(Object, Object, Field, Field) - end"); //$NON-NLS-1$
+		}
 	}
 
 	/**
@@ -358,8 +406,14 @@ public abstract class AbstractMapper {
 
 	private MappingType getMappingType(Class<?> targetClass,
 			Class<?>[] sourceClass) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getMappingType(Class<?>, Class<?>[]) - start"); //$NON-NLS-1$
+		}
 
 		if (targetClass.isAnnotationPresent(Mappable.class)) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("getMappingType(Class<?>, Class<?>[]) - end"); //$NON-NLS-1$
+			}
 			return MappingType.TARGET;
 		} else {
 			boolean isMappable = true;
@@ -370,6 +424,9 @@ public abstract class AbstractMapper {
 			}
 
 			if (isMappable) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("getMappingType(Class<?>, Class<?>[]) - end"); //$NON-NLS-1$
+				}
 				return MappingType.SOURCE;
 			} else {
 				throw new NonMappableTargetBeanException(

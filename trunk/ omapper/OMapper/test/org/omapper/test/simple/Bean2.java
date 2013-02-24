@@ -3,6 +3,8 @@
  */
 package org.omapper.test.simple;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,10 @@ import org.omapper.annotations.Source;
  */
 @Mappable
 public class Bean2 {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(Bean2.class);
 	
 	/** The i. */
 	@Source(type=Bean1.class,property="i")

@@ -3,12 +3,18 @@
  */
 package org.omapper.exception;
 
+import org.apache.log4j.Logger;
+
 /**
  * The Class NonMappableTargetBeanException.
  * 
  * @author Sachin
  */
 public class NonMappableTargetBeanException extends RuntimeException {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(NonMappableTargetBeanException.class);
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4494097297587455660L;

@@ -3,6 +3,8 @@
  */
 package org.omapper.mapper;
 
+import org.apache.log4j.Logger;
+
 import java.lang.reflect.Field;
 
 // TODO: Auto-generated Javadoc
@@ -10,6 +12,10 @@ import java.lang.reflect.Field;
  * The Class MapEntry.
  */
 class MapEntry {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(MapEntry.class);
 
 	/** The source field. */
 	private final Field sourceField;

@@ -3,6 +3,8 @@
  */
 package org.omapper.util;
 
+import org.apache.log4j.Logger;
+
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -25,6 +27,10 @@ import org.omapper.exception.UnknownTypeException;
  */
 
 public class MapperUtil {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(MapperUtil.class);
 
 	/**
 	 * Gets the field map for all the fields in the passed classes array.
@@ -34,6 +40,10 @@ public class MapperUtil {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static Map<String, Field> getFieldMap(Class... targetClasses) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getFieldMap(Class) - start"); //$NON-NLS-1$
+		}
+
 		Map<String, Field> fieldMap = new HashMap<String, Field>();
 		for (Class targetClass : targetClasses) {
 
@@ -43,6 +53,10 @@ public class MapperUtil {
 				
 				fieldMap.put(constructFieldMappingKey(field), field);
 			}
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("getFieldMap(Class) - end"); //$NON-NLS-1$
 		}
 		return fieldMap;
 	}
@@ -59,6 +73,9 @@ public class MapperUtil {
 	 */
 	public static void checkIfCompatible(Field sourceField, Field targetField)
 			throws IncompatibleFieldsException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("checkIfCompatible(Field, Field) - start"); //$NON-NLS-1$
+		}
 
 		if (!(targetField.getType().isAssignableFrom(sourceField.getType()))) {
 			throw new IncompatibleFieldsException("Source Field:"
@@ -68,6 +85,9 @@ public class MapperUtil {
 					+ targetField.getType());
 		}
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("checkIfCompatible(Field, Field) - end"); //$NON-NLS-1$
+		}
 	}
 	
 	
@@ -79,10 +99,17 @@ public class MapperUtil {
 	 * @return the string
 	 */
 	public static String constructFieldMappingKey(Field targetField) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("constructFieldMappingKey(Field) - start"); //$NON-NLS-1$
+		}
 
 		StringBuilder key = new StringBuilder(targetField.getDeclaringClass()
 				.getCanonicalName()).append('.').append(targetField.getName());
-		return key.toString();
+		String returnString = key.toString();
+		if (logger.isDebugEnabled()) {
+			logger.debug("constructFieldMappingKey(Field) - end"); //$NON-NLS-1$
+		}
+		return returnString;
 	}
 	
 	
@@ -93,6 +120,9 @@ public class MapperUtil {
 	 *            the annotated elements
 	 */
 	public static void checkIfMappable(AnnotatedElement annotatedElement) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("checkIfMappable(AnnotatedElement) - start"); //$NON-NLS-1$
+		}
 
 		if (annotatedElement != null) {
 			if (!annotatedElement.isAnnotationPresent(Mappable.class)) {
@@ -102,6 +132,10 @@ public class MapperUtil {
 								+ " is not mappable.\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
 			}
 
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("checkIfMappable(AnnotatedElement) - end"); //$NON-NLS-1$
 		}
 	}
 
@@ -113,6 +147,10 @@ public class MapperUtil {
 	 */
 	public static FieldType getFieldType(Field field)
  {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getFieldType(Field) - start"); //$NON-NLS-1$
+		}
+
 		Class<?> fieldType = field.getType();
 		FieldType fieldTypeEnum = null;
 		if (Collection.class.isAssignableFrom(fieldType)) {
@@ -133,6 +171,10 @@ public class MapperUtil {
 		else {
 			fieldTypeEnum = FieldType.JAVA;
 		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("getFieldType(Field) - end"); //$NON-NLS-1$
+		}
 		return fieldTypeEnum;
 
 	}
@@ -144,7 +186,15 @@ public class MapperUtil {
 	 */
 	public static boolean isParameterized(Field field)
 	{
-		return (!(field.getType()==field.getGenericType()));
+		if (logger.isDebugEnabled()) {
+			logger.debug("isParameterized(Field) - start"); //$NON-NLS-1$
+		}
+
+		boolean returnboolean = (!(field.getType() == field.getGenericType()));
+		if (logger.isDebugEnabled()) {
+			logger.debug("isParameterized(Field) - end"); //$NON-NLS-1$
+		}
+		return returnboolean;
 	}
 	/**
 	 * Returns the class of the parameterized field like for List<String> , this method would return String class object
@@ -153,12 +203,22 @@ public class MapperUtil {
 	 */
 	public static Class<?> getParamterizedType(Field field)
 	{
+		if (logger.isDebugEnabled()) {
+			logger.debug("getParamterizedType(Field) - start"); //$NON-NLS-1$
+		}
+
+		if (logger.isDebugEnabled()) {
+			logger.debug("getParamterizedType(Field) - end"); //$NON-NLS-1$
+		}
 		return null;
 	}
 	
 
 	
 	public static Object createTargetFieldArrayInstance(Field targetField, int length) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("createTargetFieldArrayInstance(Field, int) - start"); //$NON-NLS-1$
+		}
 
 		Class<?> componentType = targetField.getType().getComponentType();
 		Object targetObject = null;
@@ -178,6 +238,9 @@ public class MapperUtil {
 			targetObject = Array.newInstance(componentType, length);
 		}
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("createTargetFieldArrayInstance(Field, int) - end"); //$NON-NLS-1$
+		}
 		return targetObject;
 
 	}
@@ -195,6 +258,10 @@ public class MapperUtil {
 	 */
 	public static Object createTargetFieldInstance(Field targetField)
 			throws InstantiationException, IllegalAccessException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("createTargetFieldInstance(Field) - start"); //$NON-NLS-1$
+		}
+
 		Object targetObject = null;
 		if (targetField.getType().isInterface()
 				|| Modifier.isAbstract(targetField.getType().getModifiers())) {
@@ -212,6 +279,9 @@ public class MapperUtil {
 			targetObject = targetField.getType().newInstance();
 		}
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("createTargetFieldInstance(Field) - end"); //$NON-NLS-1$
+		}
 		return targetObject;
 	}
 

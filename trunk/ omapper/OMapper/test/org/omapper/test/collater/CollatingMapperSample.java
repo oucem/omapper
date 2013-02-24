@@ -41,6 +41,9 @@ public class CollatingMapperSample {
 	public static void main(String[] args) throws UnableToMapException,
 			UnknownPropertyException, UnknownTypeException,
 			IllegalArgumentException, IllegalAccessException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("main(String[]) - start"); //$NON-NLS-1$
+		}
 
 		DOMConfigurator.configure("config/log4j.xml");
 		logger.debug("Sample program starts");
@@ -68,6 +71,9 @@ public class CollatingMapperSample {
 
 		System.out.println("Collating Mapper Dempo.....Ends");
 
+		if (logger.isDebugEnabled()) {
+			logger.debug("main(String[]) - end"); //$NON-NLS-1$
+		}
 	}
 
 }
