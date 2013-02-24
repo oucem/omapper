@@ -108,15 +108,14 @@ public abstract class AbstractMapper {
 
 				Source sourceAnnotation = targetField
 						.getAnnotation(Source.class);
-				if(null==sourceAnnotation)
-				{
-					System.out.println("No source annotation found for field :"+targetField+" so skipping it");
+				if (null == sourceAnnotation) {
+					System.out.println("No source annotation found for field :"
+							+ targetField + " so skipping it");
 					continue;
+				} else {
+
 				}
-				else{
-					
-				}
-				
+
 				switch (fieldType) {
 				case ARRAY:
 				case COLLECTION:
