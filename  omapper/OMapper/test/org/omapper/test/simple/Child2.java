@@ -3,6 +3,8 @@
  */
 package org.omapper.test.simple;
 
+import org.apache.log4j.Logger;
+
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
 
@@ -11,6 +13,10 @@ import org.omapper.annotations.Source;
  */
 @Mappable
 public class Child2 {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(Child2.class);
 
 	/** The name. */
 	@Source(type=Child1.class, property="name")

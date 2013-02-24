@@ -43,6 +43,9 @@ public class SimpleMapperSample {
 	public static void main(String[] args) throws UnableToMapException,
 			UnknownPropertyException, UnknownTypeException,
 			IllegalArgumentException, IllegalAccessException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("main(String[]) - start"); //$NON-NLS-1$
+		}
 
 		DOMConfigurator.configure("config/log4j.xml");
 		logger.debug("Sample program starts");

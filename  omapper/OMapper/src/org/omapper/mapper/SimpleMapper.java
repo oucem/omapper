@@ -3,6 +3,8 @@
  */
 package org.omapper.mapper;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * This mapper maps one bean class to another.
@@ -12,6 +14,10 @@ package org.omapper.mapper;
  * @author Sachin
  */
 public class SimpleMapper<T, S> extends AbstractMapper {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(SimpleMapper.class);
 
 	/**
 	 * Instantiates a new simple mapper.
@@ -32,9 +38,15 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 	 * @param source the source
 	 */
 	public void mapBean(T target, S source) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapBean(T, S) - start"); //$NON-NLS-1$
+		}
 		
 		super.mapBean(target, source);
 		
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapBean(T, S) - end"); //$NON-NLS-1$
+		}
 	}
 
 	

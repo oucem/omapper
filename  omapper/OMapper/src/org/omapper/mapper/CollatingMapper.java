@@ -3,6 +3,8 @@
  */
 package org.omapper.mapper;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * This mapper is used to collate data from mutiple beans to one bean.
@@ -12,6 +14,10 @@ package org.omapper.mapper;
  */
 
 public class CollatingMapper<T> extends AbstractMapper {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(CollatingMapper.class);
 
 	/**
 	 * Instantiates a new collating mapper.
@@ -31,9 +37,15 @@ public class CollatingMapper<T> extends AbstractMapper {
 	 * @see org.omapper.mapper.AbstractMapper#mapBean(java.lang.Object, java.lang.Object[])
 	 */
 	public void mapBean(Object target, Object... source) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapBean(Object, Object) - start"); //$NON-NLS-1$
+		}
 	
 		super.mapBean(target, source);
 		
+		if (logger.isDebugEnabled()) {
+			logger.debug("mapBean(Object, Object) - end"); //$NON-NLS-1$
+		}
 	}
 	
 

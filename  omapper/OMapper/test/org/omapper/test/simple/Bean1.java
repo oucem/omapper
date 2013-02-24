@@ -3,12 +3,18 @@
  */
 package org.omapper.test.simple;
 
+import org.apache.log4j.Logger;
+
 import java.util.List;
 
 /**
  * The Class Bean1.
  */
 public class Bean1 {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(Bean1.class);
 
 	/** The i. */
 	private int i;

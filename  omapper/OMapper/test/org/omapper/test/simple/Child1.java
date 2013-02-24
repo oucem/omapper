@@ -3,10 +3,16 @@
  */
 package org.omapper.test.simple;
 
+import org.apache.log4j.Logger;
+
 /**
  * The Class Child1.
  */
 public class Child1 {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(Child1.class);
 
 	/** The name. */
 	private String name;

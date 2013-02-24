@@ -3,6 +3,8 @@
  */
 package org.omapper.enums;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * The Enum MapperType.
