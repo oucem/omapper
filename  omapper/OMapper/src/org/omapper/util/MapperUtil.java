@@ -16,6 +16,7 @@ import java.util.Map;
 import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
 import org.omapper.enums.FieldType;
+import org.omapper.enums.MappingType;
 import org.omapper.exception.IncompatibleFieldsException;
 import org.omapper.exception.NonMappableTargetBeanException;
 import org.omapper.exception.UnknownTypeException;
@@ -285,5 +286,37 @@ public class MapperUtil {
 		return targetObject;
 	}
 
-	
+	public static MappingType getMappingType(Class<?> targetClass,
+			Class<?>[] sourceClass) {
+		if (logger.isDebugEnabled()) {
+			logger.debug("getMappingType(Class<?>, Class<?>[]) - start"); //$NON-NLS-1$
+		}
+
+		if (targetClass.isAnnotationPresent(Mappable.class)) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("getMappingType(Class<?>, Class<?>[]) - end"); //$NON-NLS-1$
+			}
+			return MappingType.TARGET;
+		} else {
+			boolean isMappable = true;
+			for (Class<?> source : sourceClass) {
+				if (!source.isAnnotationPresent(Mappable.class)) {
+					isMappable = false;
+				}
+			}
+
+			if (isMappable) {
+				if (logger.isDebugEnabled()) {
+					logger.debug("getMappingType(Class<?>, Class<?>[]) - end"); //$NON-NLS-1$
+				}
+				return MappingType.SOURCE;
+			} else {
+				throw new NonMappableTargetBeanException(
+						"Either target bean Class or all the source bean classes MUST be mappable."
+
+								+ "\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
+
+			}
+		}
+	}
 }
