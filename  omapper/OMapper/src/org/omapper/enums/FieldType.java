@@ -17,7 +17,7 @@ public enum FieldType {
 	ARRAY,
 	COLLECTION,
 	MAP,
-	/*This field type indictaes that teh field type is an interfcae or abstract which can not be instantiated and needs an */
+	/*This field type indicates that the field type is an interface or abstract which can not be instantiated and needs an implementation */
 	TEMPLATE
 
 }
