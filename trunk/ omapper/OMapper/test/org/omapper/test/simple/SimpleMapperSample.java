@@ -64,7 +64,7 @@ public class SimpleMapperSample {
 		Child1 child2=new Child1();
 		child2.setAge(11);
 		child2.setName("Junior Vipin");
-		List<Child1> child1List=new LinkedList<Child1>();
+		List<Child1> child1List=new ArrayList<Child1>();
 		child1List.add(child1);
 		child1List.add(child2);
 		bean1.setChild(child1);
@@ -75,7 +75,7 @@ public class SimpleMapperSample {
 		Bean2 bean2 = new Bean2();
 
 		mapper.mapBean(bean2, bean1);
-
+		logger.debug("Bean1=" + bean1);
 		logger.debug("Bean2=" + bean2);
 
 		logger.debug("Simple Mapper Dempo.....Ends");
