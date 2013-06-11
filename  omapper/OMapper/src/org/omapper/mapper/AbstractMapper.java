@@ -17,6 +17,7 @@ import java.util.Map;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
 import org.omapper.enums.FieldType;
+import org.omapper.enums.MapperType;
 import org.omapper.enums.MappingType;
 import org.omapper.exception.IncompatibleFieldsException;
 import org.omapper.exception.NonMappableTargetBeanException;
@@ -71,12 +72,12 @@ public abstract class AbstractMapper {
 		}
 
 		Map<String, Class> sourceClassMap = new HashMap<String, Class>();
-
+        //cache class objects in map
 		for (Class source : sourceClass) {
 			sourceClassMap.put(source.getCanonicalName(), source);
 		}
 
-		MappingType mappingType = getMappingType(targetClass, sourceClass);
+		MappingType mappingType = MapperUtil.getMappingType(targetClass, sourceClass);
 
 		switch (mappingType) {
 		case SOURCE:
@@ -97,7 +98,13 @@ public abstract class AbstractMapper {
 	private void initFieldMapFromSource(Class targetClass,
 			Map<String, Class> sourceClassMap) {
 		// TODO Auto-generated method stub
-
+		Iterator<String> iter=sourceClassMap.keySet().iterator();
+		Map<String, Class> targetMap=new HashMap<String, Class>();
+		targetMap.put(targetClass.getCanonicalName(),targetClass);
+		while(iter.hasNext())
+		{
+			initFieldMapFromTarget(sourceClassMap.get(iter.next()),targetMap);
+		}
 	}
 
 	private void initFieldMapFromTarget(Class targetClass,
@@ -130,7 +137,7 @@ public abstract class AbstractMapper {
 					continue;
 				} else {
 
-				}
+			
 
 				switch (fieldType) {
 				case ARRAY:
@@ -141,6 +148,7 @@ public abstract class AbstractMapper {
 				case TEMPLATE:
 				case USER:
 
+					}
 				}
 
 				if (null != sourceAnnotation) {
@@ -404,37 +412,5 @@ public abstract class AbstractMapper {
 
 	}
 
-	private MappingType getMappingType(Class<?> targetClass,
-			Class<?>[] sourceClass) {
-		if (logger.isDebugEnabled()) {
-			logger.debug("getMappingType(Class<?>, Class<?>[]) - start"); //$NON-NLS-1$
-		}
-
-		if (targetClass.isAnnotationPresent(Mappable.class)) {
-			if (logger.isDebugEnabled()) {
-				logger.debug("getMappingType(Class<?>, Class<?>[]) - end"); //$NON-NLS-1$
-			}
-			return MappingType.TARGET;
-		} else {
-			boolean isMappable = true;
-			for (Class<?> source : sourceClass) {
-				if (!source.isAnnotationPresent(Mappable.class)) {
-					isMappable = false;
-				}
-			}
-
-			if (isMappable) {
-				if (logger.isDebugEnabled()) {
-					logger.debug("getMappingType(Class<?>, Class<?>[]) - end"); //$NON-NLS-1$
-				}
-				return MappingType.SOURCE;
-			} else {
-				throw new NonMappableTargetBeanException(
-						"Either target bean Class or all the source bean classes MUST be mappable."
-
-								+ "\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
-
-			}
-		}
-	}
+	
 }
