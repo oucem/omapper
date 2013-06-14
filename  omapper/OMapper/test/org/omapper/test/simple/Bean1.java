@@ -4,12 +4,15 @@
 package org.omapper.test.simple;
 
 import org.apache.log4j.Logger;
+import org.omapper.annotations.Mappable;
+import org.omapper.annotations.Sink;
 
 import java.util.List;
 
 /**
  * The Class Bean1.
  */
+@Mappable
 public class Bean1 {
 	/**
 	 * Logger for this class
@@ -17,17 +20,22 @@ public class Bean1 {
 	private static final Logger logger = Logger.getLogger(Bean1.class);
 
 	/** The i. */
+	@Sink(type=Bean2.class, property="i")
 	private int i;
 	
 	/** The x. */
+	@Sink(type=Bean2.class, property="x")
 	private String x;
 	
 	/** The child. */
+	@Sink(type=Bean2.class, property="child")
 	private Child1 child;
 	
 	/** The child list. */
+	@Sink(type=Bean2.class, property="childList")
 	private List<Child1> childList;
 	
+	@Sink(type=Bean2.class, property="childArray")
 	private Child1[] childArray;
 
 	/**

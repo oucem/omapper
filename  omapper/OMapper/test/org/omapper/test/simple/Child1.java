@@ -4,10 +4,13 @@
 package org.omapper.test.simple;
 
 import org.apache.log4j.Logger;
+import org.omapper.annotations.Mappable;
+import org.omapper.annotations.Sink;
 
 /**
  * The Class Child1.
  */
+@Mappable
 public class Child1 {
 	/**
 	 * Logger for this class
@@ -15,9 +18,11 @@ public class Child1 {
 	private static final Logger logger = Logger.getLogger(Child1.class);
 
 	/** The name. */
+	@Sink(type=Child2.class, property="name")
 	private String name;
 	
 	/** The age. */
+	@Sink(type=Child2.class, property="age")
 	private int age;
 	
 	/**

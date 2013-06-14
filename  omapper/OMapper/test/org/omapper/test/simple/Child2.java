@@ -11,7 +11,7 @@ import org.omapper.annotations.Source;
 /**
  * The Class Child2.
  */
-@Mappable
+
 public class Child2 {
 	/**
 	 * Logger for this class
