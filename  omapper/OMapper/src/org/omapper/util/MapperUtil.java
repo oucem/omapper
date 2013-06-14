@@ -23,7 +23,7 @@ import org.omapper.exception.UnknownTypeException;
 
 /**
  * The Class MapperUtil.
- *
+ * 
  * @author Sachin
  */
 
@@ -35,8 +35,9 @@ public class MapperUtil {
 
 	/**
 	 * Gets the field map for all the fields in the passed classes array.
-	 *
-	 * @param targetClasses the target classes
+	 * 
+	 * @param targetClasses
+	 *            the target classes
 	 * @return the field map
 	 */
 	@SuppressWarnings("rawtypes")
@@ -51,7 +52,7 @@ public class MapperUtil {
 			Field[] fieldArray = targetClass.getDeclaredFields();
 
 			for (Field field : fieldArray) {
-				
+
 				fieldMap.put(constructFieldMappingKey(field), field);
 			}
 		}
@@ -90,8 +91,7 @@ public class MapperUtil {
 			logger.debug("checkIfCompatible(Field, Field) - end"); //$NON-NLS-1$
 		}
 	}
-	
-	
+
 	/**
 	 * Construct field mapping key.
 	 * 
@@ -112,8 +112,7 @@ public class MapperUtil {
 		}
 		return returnString;
 	}
-	
-	
+
 	/**
 	 * Check if mappable.
 	 * 
@@ -140,14 +139,13 @@ public class MapperUtil {
 		}
 	}
 
-	
 	/**
 	 * Parses the field and returns the field type
+	 * 
 	 * @param field
 	 * @return
 	 */
-	public static FieldType getFieldType(Field field)
- {
+	public static FieldType getFieldType(Field field) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getFieldType(Field) - start"); //$NON-NLS-1$
 		}
@@ -179,14 +177,14 @@ public class MapperUtil {
 		return fieldTypeEnum;
 
 	}
-	
+
 	/**
 	 * Checks if the passed field is parameterized or not
+	 * 
 	 * @param field
 	 * @return
 	 */
-	public static boolean isParameterized(Field field)
-	{
+	public static boolean isParameterized(Field field) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("isParameterized(Field) - start"); //$NON-NLS-1$
 		}
@@ -197,13 +195,15 @@ public class MapperUtil {
 		}
 		return returnboolean;
 	}
+
 	/**
-	 * Returns the class of the parameterized field like for List<String> , this method would return String class object
+	 * Returns the class of the parameterized field like for List<String> , this
+	 * method would return String class object
+	 * 
 	 * @param field
 	 * @return
 	 */
-	public static Class<?> getParamterizedType(Field field)
-	{
+	public static Class<?> getParamterizedType(Field field) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("getParamterizedType(Field) - start"); //$NON-NLS-1$
 		}
@@ -213,10 +213,9 @@ public class MapperUtil {
 		}
 		return null;
 	}
-	
 
-	
-	public static Object createTargetFieldArrayInstance(Field targetField, int length) {
+	public static Object createTargetFieldArrayInstance(Field targetField,
+			int length) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("createTargetFieldArrayInstance(Field, int) - start"); //$NON-NLS-1$
 		}
@@ -264,7 +263,12 @@ public class MapperUtil {
 		}
 
 		Object targetObject = null;
-		if (targetField.getType().isInterface()
+
+		if (targetField.getType().isArray()) {
+
+			targetObject = targetField.getType().getComponentType()
+					.newInstance();
+		} else if (targetField.getType().isInterface()
 				|| Modifier.isAbstract(targetField.getType().getModifiers())) {
 			if (targetField.isAnnotationPresent(Implementation.class)) {
 				Implementation interfaceAnnot = targetField
@@ -276,7 +280,9 @@ public class MapperUtil {
 						"Type of target field could not be determined, use @interface annotaion to specify implementation type for interface types");
 			}
 
-		} else {
+		}
+
+		else {
 			targetObject = targetField.getType().newInstance();
 		}
 
@@ -318,6 +324,6 @@ public class MapperUtil {
 
 			}
 		}
-	}	
-	
+	}
+
 }

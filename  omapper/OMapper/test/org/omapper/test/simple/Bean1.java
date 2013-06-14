@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Sink;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -37,6 +38,9 @@ public class Bean1 {
 	
 	@Sink(type=Bean2.class, property="childArray")
 	private Child1[] childArray;
+	
+	@Sink(type=Bean2.class, property="intArray")
+	private int[] intArray;
 
 	/**
 	 * Gets the i.
@@ -114,9 +118,6 @@ public class Bean1 {
 		this.childList = childList;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -128,6 +129,8 @@ public class Bean1 {
 		builder.append(child);
 		builder.append(", childList=");
 		builder.append(childList);
+		builder.append(", childArray=");
+		builder.append(Arrays.toString(childArray));
 		builder.append("]");
 		return builder.toString();
 	}
@@ -144,6 +147,14 @@ public class Bean1 {
 	 */
 	public void setChildArray(Child1[] childArray) {
 		this.childArray = childArray;
+	}
+
+	public int[] getIntArray() {
+		return intArray;
+	}
+
+	public void setIntArray(int[] intArray) {
+		this.intArray = intArray;
 	}
 
 }

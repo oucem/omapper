@@ -14,6 +14,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.omapper.annotations.Mappable;
+import org.omapper.annotations.Sink;
 import org.omapper.annotations.Source;
 import org.omapper.enums.FieldType;
 import org.omapper.enums.MappingType;
@@ -69,12 +70,13 @@ public abstract class AbstractMapper {
 		}
 
 		Map<String, Class> sourceClassMap = new HashMap<String, Class>();
-        //cache class objects in map
+		// cache class objects in map
 		for (Class source : sourceClass) {
 			sourceClassMap.put(source.getCanonicalName(), source);
 		}
 
-		MappingType mappingType = MapperUtil.getMappingType(targetClass, sourceClass);
+		MappingType mappingType = MapperUtil.getMappingType(targetClass,
+				sourceClass);
 
 		switch (mappingType) {
 		case SOURCE:
@@ -97,13 +99,110 @@ public abstract class AbstractMapper {
 	private void initFieldMapFromSource(Class targetClass,
 			Map<String, Class> sourceClassMap) {
 		// TODO Auto-generated method stub
-		Iterator<String> iter=sourceClassMap.keySet().iterator();
-		Map<String, Class> targetMap=new HashMap<String, Class>();
-		targetMap.put(targetClass.getCanonicalName(),targetClass);
-		while(iter.hasNext())
-		{
-			initFieldMapFromTarget(sourceClassMap.get(iter.next()),targetMap);
+
+		for (Map.Entry<String, Class> entry : sourceClassMap.entrySet()) {
+			Field[] sourceFieldArray = entry.getValue().getDeclaredFields();
+			for (Field sourceField : sourceFieldArray) {
+				String sourceFieldName = sourceField.getName();
+				sourceField.setAccessible(true);
+
+				FieldType fieldType = MapperUtil.getFieldType(sourceField);
+				System.out.println("Found target Field:" + sourceFieldName
+						+ " of type:" + fieldType);
+
+				if (!sourceField.isAnnotationPresent(Sink.class)) {
+
+					System.out.println("No annotation mapping found for field:"
+							+ sourceField + " so skipping it");
+					continue;
+				}
+
+				Sink targetAnnotation = sourceField.getAnnotation(Sink.class);
+
+				if (null == targetAnnotation) {
+					System.out.println("No target annotation found for field :"
+							+ sourceField + " so skipping it");
+					continue;
+				}
+
+				String targetFieldName = targetAnnotation.property();
+				Class targetClassName = targetAnnotation.type();
+				if (!targetClassName.getCanonicalName().equals(
+						targetClass.getCanonicalName())) {
+					System.out
+							.println("Target Class specified is different from parameters for field:"
+									+ sourceFieldName
+									+ " Specified:"
+									+ targetClassName.getCanonicalName()
+									+ " Allowed Target Class:"
+									+ targetClass.getCanonicalName()
+									+ " so skipping it");
+					continue;
+				}
+
+				try {
+					Field targetField = targetClassName
+							.getDeclaredField(targetFieldName);
+
+					targetField.setAccessible(true);
+					MapEntry entryFieldMap = new MapEntry(sourceField,
+							targetField);
+					String fieldMappingKey = MapperUtil
+							.constructFieldMappingKey(targetField);
+					if (!fieldMappingMap.containsKey(fieldMappingKey)) {
+						fieldMappingMap.put(fieldMappingKey, entryFieldMap);
+					}
+					if (sourceField.getType().isAnnotationPresent(
+							Mappable.class)
+							|| targetField.getType().isAnnotationPresent(
+									Mappable.class)) {
+						initFieldMaps(targetField.getType(),
+								sourceField.getType());
+					} else if (Collection.class.isAssignableFrom(targetField
+							.getType())
+							|| Map.class
+									.isAssignableFrom(targetField.getType())) {
+						if ((targetField.getGenericType() == targetField
+								.getType())
+								&& (sourceField.getGenericType() == sourceField
+										.getType())) {
+							System.out
+									.println("Found non parameterized collections field:"
+											+ targetField
+											+ " skipping it as not supported yet");
+						} else {
+							initFieldMaps(
+									(ParameterizedType) targetField
+											.getGenericType(),
+									(ParameterizedType) sourceField
+											.getGenericType());
+
+						}
+
+					} else if (targetField.getType().isArray()
+							&& sourceField.getType().isArray()) {
+						if (!sourceField.getType().getComponentType()
+								.isPrimitive()) {
+							initFieldMaps(targetField.getType()
+									.getComponentType(), sourceField.getType()
+									.getComponentType());
+						}
+					}
+				} catch (NoSuchFieldException e) {
+					logger.error(
+							"initFieldMapFromTarget(Class, Map<String,Class>)", e); //$NON-NLS-1$
+
+					throw new UnknownPropertyException("Sink Property:"
+							+ targetFieldName
+							+ " defined in annotation for field :"
+							+ sourceFieldName
+							+ " is not prsent in target type:"
+							+ targetClassName);
+				}
+
+			}
 		}
+
 	}
 
 	private void initFieldMapFromTarget(Class targetClass,
@@ -136,16 +235,14 @@ public abstract class AbstractMapper {
 					continue;
 				} else {
 
-			
-
-				switch (fieldType) {
-				case ARRAY:
-				case COLLECTION:
-				case ENUM:
-				case JAVA:
-				case MAP:
-				case TEMPLATE:
-				case USER:
+					switch (fieldType) {
+					case ARRAY:
+					case COLLECTION:
+					case ENUM:
+					case JAVA:
+					case MAP:
+					case TEMPLATE:
+					case USER:
 
 					}
 				}
@@ -207,7 +304,8 @@ public abstract class AbstractMapper {
 
 						}
 					} catch (NoSuchFieldException e) {
-						logger.error("initFieldMapFromTarget(Class, Map<String,Class>)", e); //$NON-NLS-1$
+						logger.error(
+								"initFieldMapFromTarget(Class, Map<String,Class>)", e); //$NON-NLS-1$
 
 						throw new UnknownPropertyException("Source Property:"
 								+ sourceFieldName
@@ -266,7 +364,9 @@ public abstract class AbstractMapper {
 							.getDeclaringClass().getCanonicalName());
 					// recursively map the enclosed beans too
 					if (targetField.getType().isAnnotationPresent(
-							Mappable.class)) {
+							Mappable.class)
+							|| sourceField.getType().isAnnotationPresent(
+									Mappable.class)) {
 						Object targetObject = MapperUtil
 								.createTargetFieldInstance(targetField);
 						mapBean(targetObject, sourceField.get(sourceObject));
@@ -405,11 +505,34 @@ public abstract class AbstractMapper {
 	 * @param sourceObject
 	 * @param targetField
 	 * @param sourceField
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InstantiationException
 	 */
 	private void mapArrayBeans(Object targetObject, Object sourceObject,
-			Field targetField, Field sourceField) {
+			Field targetField, Field sourceField)
+			throws IllegalArgumentException, IllegalAccessException,
+			InstantiationException {
+
+		Object sourceArray = sourceField.get(sourceObject);
+		Object targetArray = targetObject;
+		int length = Array.getLength(sourceArray);
+		for (int i = 0; i < length; i++) {
+			Object sourceArrayElement = Array.get(sourceArray, i);
+			Object targetArrayElement = MapperUtil
+					.createTargetFieldInstance(targetField);
+			if (targetField.getType().getComponentType()
+					.isAnnotationPresent(Mappable.class)
+					|| sourceField.getType().getComponentType()
+							.isAnnotationPresent(Mappable.class)) {
+				mapBean(targetArrayElement, sourceArrayElement);
+				Array.set(targetArray, i, targetArrayElement);
+			} else {
+				System.out.println("Array Type not supported yet:"
+						+ sourceField.getType().getComponentType());
+			}
+		}
 
 	}
 
-	
 }
