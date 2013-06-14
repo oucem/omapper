@@ -3,8 +3,6 @@
  */
 package org.omapper.mapper;
 
-import org.apache.log4j.Logger;
-
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -14,13 +12,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Source;
 import org.omapper.enums.FieldType;
-import org.omapper.enums.MapperType;
 import org.omapper.enums.MappingType;
 import org.omapper.exception.IncompatibleFieldsException;
-import org.omapper.exception.NonMappableTargetBeanException;
 import org.omapper.exception.UnableToMapException;
 import org.omapper.exception.UnknownPropertyException;
 import org.omapper.exception.UnknownTypeException;
@@ -81,9 +78,11 @@ public abstract class AbstractMapper {
 
 		switch (mappingType) {
 		case SOURCE:
+			System.out.println("MApping Type:Source");
 			initFieldMapFromSource(targetClass, sourceClassMap);
 			break;
 		case TARGET:
+			System.out.println("MApping Type:Target");
 			initFieldMapFromTarget(targetClass, sourceClassMap);
 			break;
 		}
