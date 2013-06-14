@@ -15,7 +15,6 @@ import org.omapper.annotations.Source;
 /**
  * The Class Bean2.
  */
-@Mappable
 public class Bean2 {
 	/**
 	 * Logger for this class
