@@ -6,10 +6,12 @@ package org.omapper.test.simple;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
+import org.omapper.annotations.Sink;
 import org.omapper.annotations.Source;
 
 /**
@@ -20,27 +22,30 @@ public class Bean2 {
 	 * Logger for this class
 	 */
 	private static final Logger logger = Logger.getLogger(Bean2.class);
-	
+
 	/** The i. */
-	@Source(type=Bean1.class,property="i")
+	@Source(type = Bean1.class, property = "i")
 	private int i;
-	
+
 	/** The x. */
-	@Source(type=Bean1.class,property="x")
+	@Source(type = Bean1.class, property = "x")
 	private String x;
-	
+
 	/** The child. */
-	@Source(type=Bean1.class,property="child")
+	@Source(type = Bean1.class, property = "child")
 	private Child2 child;
-	
+
 	/** The child list. */
-	@Source(type=Bean1.class,property="childList")
-	@Implementation(name=ArrayList.class)
+	@Source(type = Bean1.class, property = "childList")
+	@Implementation(name = ArrayList.class)
 	private List<Child2> childList;
-	
-	@Source(type=Bean1.class,property="childArray")
+
+	@Source(type = Bean1.class, property = "childArray")
 	private Child2[] childArray;
 	
+	@Sink(type=Bean1.class, property="intArray")
+	private int[] intArray;
+
 	/**
 	 * Gets the i.
 	 * 
@@ -49,7 +54,7 @@ public class Bean2 {
 	public int getI() {
 		return i;
 	}
-	
+
 	/**
 	 * Sets the i.
 	 * 
@@ -59,7 +64,7 @@ public class Bean2 {
 	public void setI(int i) {
 		this.i = i;
 	}
-	
+
 	/**
 	 * Gets the x.
 	 * 
@@ -68,7 +73,7 @@ public class Bean2 {
 	public String getX() {
 		return x;
 	}
-	
+
 	/**
 	 * Sets the x.
 	 * 
@@ -78,7 +83,7 @@ public class Bean2 {
 	public void setX(String x) {
 		this.x = x;
 	}
-	
+
 	/**
 	 * Gets the child.
 	 * 
@@ -87,7 +92,7 @@ public class Bean2 {
 	public Child2 getChild() {
 		return child;
 	}
-	
+
 	/**
 	 * Sets the child.
 	 * 
@@ -97,7 +102,7 @@ public class Bean2 {
 	public void setChild(Child2 child) {
 		this.child = child;
 	}
-	
+
 	/**
 	 * Gets the child list.
 	 * 
@@ -106,7 +111,7 @@ public class Bean2 {
 	public List<Child2> getChildList() {
 		return childList;
 	}
-	
+
 	/**
 	 * Sets the child list.
 	 * 
@@ -116,9 +121,7 @@ public class Bean2 {
 	public void setChildList(List<Child2> childList) {
 		this.childList = childList;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -130,6 +133,8 @@ public class Bean2 {
 		builder.append(child);
 		builder.append(", childList=");
 		builder.append(childList);
+		builder.append(", childArray=");
+		builder.append(Arrays.toString(childArray));
 		builder.append("]");
 		return builder.toString();
 	}
@@ -139,5 +144,17 @@ public class Bean2 {
 	 */
 	public Child2[] getChildArray() {
 		return childArray;
+	}
+
+	public int[] getIntArray() {
+		return intArray;
+	}
+
+	public void setIntArray(int[] intArray) {
+		this.intArray = intArray;
+	}
+
+	public void setChildArray(Child2[] childArray) {
+		this.childArray = childArray;
 	}
 }
