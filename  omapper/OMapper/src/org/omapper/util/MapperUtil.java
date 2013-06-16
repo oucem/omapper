@@ -222,7 +222,9 @@ public class MapperUtil {
 
 		Class<?> componentType = targetField.getType().getComponentType();
 		Object targetObject = null;
-		if (componentType.isInterface()
+		if (componentType.isPrimitive()) {
+			targetObject = Array.newInstance(componentType, length);
+		} else if (componentType.isInterface()
 				|| Modifier.isAbstract(componentType.getModifiers())) {
 			if (targetField.isAnnotationPresent(Implementation.class)) {
 				Implementation interfaceAnnot = targetField
@@ -265,7 +267,7 @@ public class MapperUtil {
 		Object targetObject = null;
 
 		if (targetField.getType().isArray()) {
-
+			System.out.println("CType:"+targetField.getType());
 			targetObject = targetField.getType().getComponentType()
 					.newInstance();
 		} else if (targetField.getType().isInterface()
