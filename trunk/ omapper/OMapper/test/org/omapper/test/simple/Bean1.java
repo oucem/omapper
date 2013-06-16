@@ -41,6 +41,11 @@ public class Bean1 {
 	
 	@Sink(type=Bean2.class, property="intArray")
 	private int[] intArray;
+	
+	@Sink(type=Bean2.class, property="stringArray")
+	private String[] stringArray;
+	@Sink(type=Bean2.class, property="charArray")
+	private char[] charArray;
 
 	/**
 	 * Gets the i.
@@ -131,6 +136,12 @@ public class Bean1 {
 		builder.append(childList);
 		builder.append(", childArray=");
 		builder.append(Arrays.toString(childArray));
+		builder.append(", intArray=");
+		builder.append(Arrays.toString(intArray));
+		builder.append(", stringArray=");
+		builder.append(Arrays.toString(stringArray));
+		builder.append(", charArray=");
+		builder.append(Arrays.toString(charArray));
 		builder.append("]");
 		return builder.toString();
 	}
@@ -155,6 +166,22 @@ public class Bean1 {
 
 	public void setIntArray(int[] intArray) {
 		this.intArray = intArray;
+	}
+
+	public String[] getStringArray() {
+		return stringArray;
+	}
+
+	public void setStringArray(String[] stringArray) {
+		this.stringArray = stringArray;
+	}
+
+	public char[] getCharArray() {
+		return charArray;
+	}
+
+	public void setCharArray(char[] charArray) {
+		this.charArray = charArray;
 	}
 
 }

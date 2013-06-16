@@ -182,7 +182,7 @@ public abstract class AbstractMapper {
 					} else if (targetField.getType().isArray()
 							&& sourceField.getType().isArray()) {
 						if (!sourceField.getType().getComponentType()
-								.isPrimitive()) {
+								.isPrimitive() && (!sourceField.getType().getComponentType().equals(String.class))) {
 							initFieldMaps(targetField.getType()
 									.getComponentType(), sourceField.getType()
 									.getComponentType());
@@ -360,8 +360,16 @@ public abstract class AbstractMapper {
 						.constructFieldMappingKey(targetField));
 				if (entry != null) {
 					Field sourceField = entry.getSourceField();
+					
+					
 					Object sourceObject = sourceObjectMap.get(sourceField
 							.getDeclaringClass().getCanonicalName());
+					
+					if(!isSourceFieldSet(sourceField,sourceObject))
+					{
+						System.out.println("Source Field:"+sourceField.getName()+" not set so skipping it");
+						continue;
+					}
 					// recursively map the enclosed beans too
 					if (targetField.getType().isAnnotationPresent(
 							Mappable.class)
@@ -420,6 +428,28 @@ public abstract class AbstractMapper {
 		if (logger.isDebugEnabled()) {
 			logger.debug("mapBean(Object, Object) - end"); //$NON-NLS-1$
 		}
+	}
+
+	private boolean isSourceFieldSet(Field sourceField, Object sourceObject) {
+		// TODO Auto-generated method stub
+		boolean returnValue = false;
+		try {
+			if (null != sourceField.get(sourceObject)) {
+				returnValue = true;
+			} else {
+				returnValue = false;
+			}
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			returnValue = false;
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			returnValue = false;
+		}
+
+		return returnValue;
 	}
 
 	/**
@@ -519,12 +549,22 @@ public abstract class AbstractMapper {
 		int length = Array.getLength(sourceArray);
 		for (int i = 0; i < length; i++) {
 			Object sourceArrayElement = Array.get(sourceArray, i);
-			Object targetArrayElement = MapperUtil
-					.createTargetFieldInstance(targetField);
-			if (targetField.getType().getComponentType()
+			if(sourceField.getType().getComponentType().isPrimitive())
+			{
+				Array.set(targetArray,i,sourceArrayElement);
+			}
+			else if(sourceField.getType().getComponentType().equals(String.class))
+			{
+				System.out.println("Found String array element");
+				Array.set(targetArray, i, new String((String) sourceArrayElement));
+			}
+			else if (targetField.getType().getComponentType()
 					.isAnnotationPresent(Mappable.class)
 					|| sourceField.getType().getComponentType()
 							.isAnnotationPresent(Mappable.class)) {
+				Object targetArrayElement = MapperUtil
+						.createTargetFieldInstance(targetField);
+				
 				mapBean(targetArrayElement, sourceArrayElement);
 				Array.set(targetArray, i, targetArrayElement);
 			} else {
