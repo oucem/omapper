@@ -3,8 +3,6 @@
  */
 package org.omapper.util;
 
-import org.apache.log4j.Logger;
-
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -13,6 +11,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
 import org.omapper.enums.FieldType;
@@ -214,6 +213,7 @@ public class MapperUtil {
 		return null;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static Object createTargetFieldArrayInstance(Field targetField,
 			int length) {
 		if (logger.isDebugEnabled()) {
@@ -258,6 +258,7 @@ public class MapperUtil {
 	 * @throws IllegalAccessException
 	 *             the illegal access exception
 	 */
+	@SuppressWarnings("rawtypes")
 	public static Object createTargetFieldInstance(Field targetField)
 			throws InstantiationException, IllegalAccessException {
 		if (logger.isDebugEnabled()) {

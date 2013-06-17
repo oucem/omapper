@@ -47,7 +47,6 @@ public abstract class AbstractMapper {
 	 * @param sourceClass
 	 *            the source class
 	 */
-	@SuppressWarnings("rawtypes")
 	public AbstractMapper(Class targetClass, Class... sourceClass) {
 
 		fieldMappingMap = new HashMap<String, MapEntry>();
@@ -63,7 +62,6 @@ public abstract class AbstractMapper {
 	 * @param sourceClass
 	 *            the source class
 	 */
-	@SuppressWarnings("rawtypes")
 	protected void initFieldMaps(Class targetClass, Class... sourceClass) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("initFieldMaps(Class, Class) - start"); //$NON-NLS-1$
@@ -502,7 +500,7 @@ public abstract class AbstractMapper {
 	 * @throws IllegalAccessException
 	 *             the illegal access exception
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "unchecked" })
 	private void mapCollectionBeans(Object targetObject, Object sourceObject,
 			Field targetField, Field sourceField)
 			throws InstantiationException, IllegalAccessException {

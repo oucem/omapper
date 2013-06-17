@@ -3,7 +3,6 @@
  */
 package org.omapper.exception;
 
-import org.apache.log4j.Logger;
 
 /**
  * The Class IncompatibleFieldsException.
@@ -11,11 +10,6 @@ import org.apache.log4j.Logger;
  * @author Sachin
  */
 public class IncompatibleFieldsException extends RuntimeException {
-	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = Logger.getLogger(IncompatibleFieldsException.class);
-
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 

@@ -3,7 +3,6 @@
  */
 package org.omapper.exception;
 
-import org.apache.log4j.Logger;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -12,11 +11,6 @@ import org.apache.log4j.Logger;
  * @author Sachin
  */
 public class UnknownTypeException extends RuntimeException  {
-	/**
-	 * Logger for this class
-	 */
-	private static final Logger logger = Logger.getLogger(UnknownTypeException.class);
-
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 

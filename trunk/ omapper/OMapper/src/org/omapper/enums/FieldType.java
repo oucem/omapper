@@ -3,7 +3,6 @@
  */
 package org.omapper.enums;
 
-import org.apache.log4j.Logger;
 
 /**
  * @author Sachin
