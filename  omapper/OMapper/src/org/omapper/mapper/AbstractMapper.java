@@ -180,7 +180,9 @@ public abstract class AbstractMapper {
 					} else if (targetField.getType().isArray()
 							&& sourceField.getType().isArray()) {
 						if (!sourceField.getType().getComponentType()
-								.isPrimitive() && (!sourceField.getType().getComponentType().equals(String.class))) {
+								.isPrimitive()
+								&& (!sourceField.getType().getComponentType()
+										.equals(String.class))) {
 							initFieldMaps(targetField.getType()
 									.getComponentType(), sourceField.getType()
 									.getComponentType());
@@ -231,18 +233,6 @@ public abstract class AbstractMapper {
 					System.out.println("No source annotation found for field :"
 							+ targetField + " so skipping it");
 					continue;
-				} else {
-
-					switch (fieldType) {
-					case ARRAY:
-					case COLLECTION:
-					case ENUM:
-					case JAVA:
-					case MAP:
-					case TEMPLATE:
-					case USER:
-
-					}
 				}
 
 				if (null != sourceAnnotation) {
@@ -339,14 +329,6 @@ public abstract class AbstractMapper {
 			Map<String, Object> sourceObjectMap = new HashMap<String, Object>();
 
 			for (Object sourceObject : source) {
-				System.out.println("Source Object:" + sourceObject);
-				System.out.println("Source class:" + sourceObject.getClass());
-				System.out.println("Source class:"
-						+ sourceObject.getClass().getCanonicalName());
-				System.out.println("Source class:"
-						+ sourceObject.getClass().getName());
-				System.out.println("Source class:"
-						+ sourceObject.getClass().getClass());
 				sourceObjectMap.put(sourceObject.getClass().getCanonicalName(),
 						sourceObject);
 			}
@@ -358,14 +340,14 @@ public abstract class AbstractMapper {
 						.constructFieldMappingKey(targetField));
 				if (entry != null) {
 					Field sourceField = entry.getSourceField();
-					
-					
+
 					Object sourceObject = sourceObjectMap.get(sourceField
 							.getDeclaringClass().getCanonicalName());
-					
-					if(!isSourceFieldSet(sourceField,sourceObject))
-					{
-						System.out.println("Source Field:"+sourceField.getName()+" not set so skipping it");
+
+					if (!isSourceFieldSet(sourceField, sourceObject)) {
+						System.out.println("Source Field:"
+								+ sourceField.getName()
+								+ " not set so skipping it");
 						continue;
 					}
 					// recursively map the enclosed beans too
@@ -547,22 +529,20 @@ public abstract class AbstractMapper {
 		int length = Array.getLength(sourceArray);
 		for (int i = 0; i < length; i++) {
 			Object sourceArrayElement = Array.get(sourceArray, i);
-			if(sourceField.getType().getComponentType().isPrimitive())
-			{
-				Array.set(targetArray,i,sourceArrayElement);
-			}
-			else if(sourceField.getType().getComponentType().equals(String.class))
-			{
-				System.out.println("Found String array element");
-				Array.set(targetArray, i, new String((String) sourceArrayElement));
-			}
-			else if (targetField.getType().getComponentType()
+			if (sourceField.getType().getComponentType().isPrimitive()) {
+				Array.set(targetArray, i, sourceArrayElement);
+			} else if (sourceField.getType().getComponentType()
+					.equals(String.class)) {
+				
+				Array.set(targetArray, i, new String(
+						(String) sourceArrayElement));
+			} else if (targetField.getType().getComponentType()
 					.isAnnotationPresent(Mappable.class)
 					|| sourceField.getType().getComponentType()
 							.isAnnotationPresent(Mappable.class)) {
 				Object targetArrayElement = MapperUtil
 						.createTargetFieldInstance(targetField);
-				
+
 				mapBean(targetArrayElement, sourceArrayElement);
 				Array.set(targetArray, i, targetArrayElement);
 			} else {
