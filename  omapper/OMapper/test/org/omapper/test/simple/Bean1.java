@@ -3,12 +3,12 @@
  */
 package org.omapper.test.simple;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.omapper.annotations.Mappable;
 import org.omapper.annotations.Sink;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * The Class Bean1.

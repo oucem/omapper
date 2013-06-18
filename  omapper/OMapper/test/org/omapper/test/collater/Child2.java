@@ -1,7 +1,7 @@
 /*
  * 
  */
-package org.omapper.test.simple;
+package org.omapper.test.collater;
 
 import org.apache.log4j.Logger;
 import org.omapper.annotations.Source;

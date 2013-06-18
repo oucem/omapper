@@ -3,47 +3,48 @@
  */
 package org.omapper.test.collater;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.omapper.annotations.Implementation;
+import org.apache.log4j.Logger;
 import org.omapper.annotations.Mappable;
-import org.omapper.annotations.Source;
+import org.omapper.annotations.Sink;
 
 /**
- * The Class Bean2.
+ * The Class Bean1.
  */
 @Mappable
-public class Bean3 {
-	
+public class Bean2 {
+	/**
+	 * Logger for this class
+	 */
+	private static final Logger logger = Logger.getLogger(Bean2.class);
+
 	/** The i. */
-	@Source(type = Bean1.class, property = "i")
+	@Sink(type=Bean2.class, property="i")
 	private int i;
-
-	/** The x. */
-	@Source(type = Bean1.class, property = "x")
-	private String x;
-
-	/** The child. */
-	@Source(type = Bean1.class, property = "child")
-	private Child2 child;
-
-	/** The child list. */
-	@Source(type = Bean2.class, property = "childList")
-	@Implementation(name = ArrayList.class)
-	private List<Child2> childList;
-
-	@Source(type = Bean1.class, property = "childArray")
-	private Child2[] childArray;
 	
-	@Source(type= Bean1.class,property="intArray")
+	/** The x. */
+	@Sink(type=Bean2.class, property="x")
+	private String x;
+	
+	/** The child. */
+	@Sink(type=Bean2.class, property="child")
+	private Child1 child;
+	
+	/** The child list. */
+	@Sink(type=Bean2.class, property="childList")
+	private List<Child1> childList;
+	
+	@Sink(type=Bean2.class, property="childArray")
+	private Child1[] childArray;
+	
+	@Sink(type=Bean2.class, property="intArray")
 	private int[] intArray;
 	
-	@Source(type= Bean2.class,property="stringArray")
+	@Sink(type=Bean2.class, property="stringArray")
 	private String[] stringArray;
-	
-	@Source(type= Bean2.class,property="charArray")
+	@Sink(type=Bean2.class, property="charArray")
 	private char[] charArray;
 
 	/**
@@ -87,9 +88,9 @@ public class Bean3 {
 	/**
 	 * Gets the child.
 	 * 
-	 * @return the child1
+	 * @return the child
 	 */
-	public Child2 getChild() {
+	public Child1 getChild() {
 		return child;
 	}
 
@@ -97,18 +98,18 @@ public class Bean3 {
 	 * Sets the child.
 	 * 
 	 * @param child
-	 *            the new child
+	 *            the child to set
 	 */
-	public void setChild(Child2 child) {
+	public void setChild(Child1 child) {
 		this.child = child;
 	}
 
 	/**
 	 * Gets the child list.
 	 * 
-	 * @return the child1List
+	 * @return the childList
 	 */
-	public List<Child2> getChildList() {
+	public List<Child1> getChildList() {
 		return childList;
 	}
 
@@ -116,16 +117,16 @@ public class Bean3 {
 	 * Sets the child list.
 	 * 
 	 * @param childList
-	 *            the new child list
+	 *            the childList to set
 	 */
-	public void setChildList(List<Child2> childList) {
+	public void setChildList(List<Child1> childList) {
 		this.childList = childList;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Bean2 [i=");
+		builder.append("Bean1 [i=");
 		builder.append(i);
 		builder.append(", x=");
 		builder.append(x);
@@ -148,8 +149,15 @@ public class Bean3 {
 	/**
 	 * @return the childArray
 	 */
-	public Child2[] getChildArray() {
+	public Child1[] getChildArray() {
 		return childArray;
+	}
+
+	/**
+	 * @param childArray the childArray to set
+	 */
+	public void setChildArray(Child1[] childArray) {
+		this.childArray = childArray;
 	}
 
 	public int[] getIntArray() {
@@ -158,10 +166,6 @@ public class Bean3 {
 
 	public void setIntArray(int[] intArray) {
 		this.intArray = intArray;
-	}
-
-	public void setChildArray(Child2[] childArray) {
-		this.childArray = childArray;
 	}
 
 	public String[] getStringArray() {
@@ -179,4 +183,5 @@ public class Bean3 {
 	public void setCharArray(char[] charArray) {
 		this.charArray = charArray;
 	}
+
 }
