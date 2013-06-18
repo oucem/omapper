@@ -269,7 +269,9 @@ public class MapperUtil {
 		Object targetObject = null;
 
 		if (targetField.getType().isArray()) {
-			System.out.println("CType:"+targetField.getType());
+			if (logger.isDebugEnabled()) {
+				logger.debug("createTargetFieldInstance(Field) - CType:" + targetField.getType()); //$NON-NLS-1$
+			}
 			targetObject = targetField.getType().getComponentType()
 					.newInstance();
 		} else if (targetField.getType().isInterface()
