@@ -42,7 +42,7 @@ public class SimpleMapper<T, S> extends AbstractMapper {
 			logger.debug("mapBean(T, S) - start"); //$NON-NLS-1$
 		}
 		
-		super.mapBean(target, source);
+		super.mapBeanDefault(target, source);
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("mapBean(T, S) - end"); //$NON-NLS-1$

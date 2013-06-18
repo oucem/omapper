@@ -36,12 +36,12 @@ public class CollatingMapper<T> extends AbstractMapper {
 	/* (non-Javadoc)
 	 * @see org.omapper.mapper.AbstractMapper#mapBean(java.lang.Object, java.lang.Object[])
 	 */
-	public void mapBean(Object target, Object... source) {
+	public void mapBean(T target, Object... source) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("mapBean(Object, Object) - start"); //$NON-NLS-1$
 		}
 	
-		super.mapBean(target, source);
+		super.mapBeanDefault(target, source);
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("mapBean(Object, Object) - end"); //$NON-NLS-1$

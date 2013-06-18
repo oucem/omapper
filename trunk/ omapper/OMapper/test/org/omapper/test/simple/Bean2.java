@@ -3,15 +3,13 @@
  */
 package org.omapper.test.simple;
 
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.omapper.annotations.Implementation;
 import org.omapper.annotations.Mappable;
-import org.omapper.annotations.Sink;
 import org.omapper.annotations.Source;
 
 /**

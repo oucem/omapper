@@ -324,7 +324,7 @@ public abstract class AbstractMapper {
 	 * @param source
 	 *            the source
 	 */
-	protected void mapBean(Object target, Object... source) {
+	protected void mapBeanDefault(Object target, Object... source) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("mapBean(Object, Object) - start"); //$NON-NLS-1$
 		}
@@ -361,7 +361,7 @@ public abstract class AbstractMapper {
 									Mappable.class)) {
 						Object targetObject = MapperUtil
 								.createTargetFieldInstance(targetField);
-						mapBean(targetObject, sourceField.get(sourceObject));
+						mapBeanDefault(targetObject, sourceField.get(sourceObject));
 						targetField.set(target, targetObject);
 					} else if (Collection.class.isAssignableFrom(targetField
 							.getType())
@@ -505,7 +505,7 @@ public abstract class AbstractMapper {
 		while (sourceIterator.hasNext()) {
 			Object targetCollectionElementObject = ((Class) targetFieldType
 					.getActualTypeArguments()[0]).newInstance();
-			mapBean(targetCollectionElementObject, sourceIterator.next());
+			mapBeanDefault(targetCollectionElementObject, sourceIterator.next());
 			targetCollection.add(targetCollectionElementObject);
 		}
 
@@ -547,7 +547,7 @@ public abstract class AbstractMapper {
 				Object targetArrayElement = MapperUtil
 						.createTargetFieldInstance(targetField);
 
-				mapBean(targetArrayElement, sourceArrayElement);
+				mapBeanDefault(targetArrayElement, sourceArrayElement);
 				Array.set(targetArray, i, targetArrayElement);
 			} else {
 				System.out.println("Array Type not supported yet:"

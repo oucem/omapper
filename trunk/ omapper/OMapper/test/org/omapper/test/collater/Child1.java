@@ -1,27 +1,28 @@
 /*
  * 
  */
-package org.omapper.test.simple;
+package org.omapper.test.collater;
 
 import org.apache.log4j.Logger;
-import org.omapper.annotations.Source;
+import org.omapper.annotations.Mappable;
+import org.omapper.annotations.Sink;
 
 /**
- * The Class Child2.
+ * The Class Child1.
  */
-
-public class Child2 {
+@Mappable
+public class Child1 {
 	/**
 	 * Logger for this class
 	 */
-	private static final Logger logger = Logger.getLogger(Child2.class);
+	private static final Logger logger = Logger.getLogger(Child1.class);
 
 	/** The name. */
-	@Source(type=Child1.class, property="name")
+	@Sink(type=Child2.class, property="name")
 	private String name;
 	
 	/** The age. */
-	@Source(type=Child1.class, property="age")
+	@Sink(type=Child2.class, property="age")
 	private int age;
 	
 	/**
@@ -67,11 +68,12 @@ public class Child2 {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Child2 [name=");
+		builder.append("Child1 [name=");
 		builder.append(name);
 		builder.append(", age=");
 		builder.append(age);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }
