@@ -17,6 +17,7 @@ import org.omapper.annotations.Source;
 /**
  * The Class Bean2.
  */
+@Mappable
 public class Bean2 {
 	/**
 	 * Logger for this class
@@ -43,12 +44,13 @@ public class Bean2 {
 	@Source(type = Bean1.class, property = "childArray")
 	private Child2[] childArray;
 	
-	
+	@Source(type= Bean1.class,property="intArray")
 	private int[] intArray;
 	
-	
+	@Source(type= Bean1.class,property="stringArray")
 	private String[] stringArray;
 	
+	@Source(type= Bean1.class,property="charArray")
 	private char[] charArray;
 
 	/**
