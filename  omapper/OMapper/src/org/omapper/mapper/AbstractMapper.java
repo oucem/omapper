@@ -284,12 +284,16 @@ public abstract class AbstractMapper {
 
 							}
 
-						} else if (targetField.getType().isArray()
+						}else if (targetField.getType().isArray()
 								&& sourceField.getType().isArray()) {
-							initFieldMaps(targetField.getType()
-									.getComponentType(), sourceField.getType()
-									.getComponentType());
-
+							if (!sourceField.getType().getComponentType()
+									.isPrimitive()
+									&& (!sourceField.getType().getComponentType()
+											.equals(String.class))) {
+								initFieldMaps(targetField.getType()
+										.getComponentType(), sourceField.getType()
+										.getComponentType());
+							}
 						}
 					} catch (NoSuchFieldException e) {
 						logger.error(

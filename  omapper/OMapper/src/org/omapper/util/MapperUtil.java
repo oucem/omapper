@@ -7,6 +7,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -321,7 +322,7 @@ public class MapperUtil {
 				return MappingType.SOURCE;
 			} else {
 				throw new NonMappableTargetBeanException(
-						"Either target bean Class or all the source bean classes MUST be mappable."
+						"Either target bean Class or all the source bean classes MUST be mappable."+ Arrays.toString(sourceClass)
 
 								+ "\n Please add @Mappable annotation to the beans which needs to managed by OMapper");
 
