@@ -68,7 +68,7 @@ public class SimpleMapperSample {
 		child1List.add(child1);
 		child1List.add(child2);
 		bean1.setChild(child1);
-		bean1.setChildList(child1List);
+		//bean1.setChildList(child1List);
 		bean1.setChildArray(new Child1[]{child1,child2});
 		bean1.setIntArray(new int[]{1,2,3});
 		bean1.setCharArray(new char[]{'s','a','c','h'});
