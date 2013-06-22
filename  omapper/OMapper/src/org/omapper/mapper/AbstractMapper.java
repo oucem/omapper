@@ -31,9 +31,8 @@ import org.omapper.util.MapperUtil;
  */
 @SuppressWarnings("rawtypes")
 public abstract class AbstractMapper {
-	/**
-	 * Logger for this class
-	 */
+	
+	/** Logger for this class. */
 	private static final Logger logger = Logger.getLogger(AbstractMapper.class);
 
 	/** The field mapping map. */
@@ -100,6 +99,14 @@ public abstract class AbstractMapper {
 	}
 	}
 
+	/**
+	 * Inits the field map from source.
+	 * 
+	 * @param targetClass
+	 *            the target class
+	 * @param sourceClassMap
+	 *            the source class map
+	 */
 	private void initFieldMapFromSource(Class targetClass,
 			Map<String, Class> sourceClassMap) {
 		if (logger.isDebugEnabled()) {
@@ -214,6 +221,14 @@ public abstract class AbstractMapper {
 	}
 	}
 
+	/**
+	 * Inits the field map from target.
+	 * 
+	 * @param targetClass
+	 *            the target class
+	 * @param sourceClassMap
+	 *            the source class map
+	 */
 	private void initFieldMapFromTarget(Class targetClass,
 			Map<String, Class> sourceClassMap) {
 		if (logger.isDebugEnabled()) {
@@ -424,6 +439,15 @@ public abstract class AbstractMapper {
 	}
 	}
 
+	/**
+	 * Checks if is source field set.
+	 * 
+	 * @param sourceField
+	 *            the source field
+	 * @param sourceObject
+	 *            the source object
+	 * @return true, if is source field set
+	 */
 	private boolean isSourceFieldSet(Field sourceField, Object sourceObject) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("isSourceFieldSet(Field, Object) - start"); //$NON-NLS-1$
@@ -536,13 +560,22 @@ public abstract class AbstractMapper {
 	}
 
 	/**
+	 * Map array beans.
+	 * 
 	 * @param targetObject
+	 *            the target object
 	 * @param sourceObject
+	 *            the source object
 	 * @param targetField
+	 *            the target field
 	 * @param sourceField
-	 * @throws IllegalAccessException
+	 *            the source field
 	 * @throws IllegalArgumentException
+	 *             the illegal argument exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
 	 * @throws InstantiationException
+	 *             the instantiation exception
 	 */
 	private void mapArrayBeans(Object targetObject, Object sourceObject,
 			Field targetField, Field sourceField)

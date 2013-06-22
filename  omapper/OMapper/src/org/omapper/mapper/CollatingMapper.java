@@ -14,9 +14,8 @@ import org.apache.log4j.Logger;
  */
 
 public class CollatingMapper<T> extends AbstractMapper {
-	/**
-	 * Logger for this class
-	 */
+	
+	/** Logger for this class. */
 	private static final Logger logger = Logger.getLogger(CollatingMapper.class);
 
 	/**
@@ -35,6 +34,14 @@ public class CollatingMapper<T> extends AbstractMapper {
 
 	/* (non-Javadoc)
 	 * @see org.omapper.mapper.AbstractMapper#mapBean(java.lang.Object, java.lang.Object[])
+	 */
+	/**
+	 * Map bean.
+	 * 
+	 * @param target
+	 *            the target
+	 * @param source
+	 *            the source
 	 */
 	public void mapBean(T target, Object... source) {
 		if (logger.isDebugEnabled()) {

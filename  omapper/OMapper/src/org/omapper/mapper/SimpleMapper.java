@@ -14,9 +14,8 @@ import org.apache.log4j.Logger;
  * @author Sachin
  */
 public class SimpleMapper<T, S> extends AbstractMapper {
-	/**
-	 * Logger for this class
-	 */
+	
+	/** Logger for this class. */
 	private static final Logger logger = Logger.getLogger(SimpleMapper.class);
 
 	/**

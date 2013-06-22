@@ -28,9 +28,8 @@ import org.omapper.exception.UnknownTypeException;
  */
 
 public class MapperUtil {
-	/**
-	 * Logger for this class
-	 */
+	
+	/** Logger for this class. */
 	private static final Logger logger = Logger.getLogger(MapperUtil.class);
 
 	/**
@@ -140,10 +139,11 @@ public class MapperUtil {
 	}
 
 	/**
-	 * Parses the field and returns the field type
+	 * Parses the field and returns the field type.
 	 * 
 	 * @param field
-	 * @return
+	 *            the field
+	 * @return the field type
 	 */
 	public static FieldType getFieldType(Field field) {
 		if (logger.isDebugEnabled()) {
@@ -179,10 +179,11 @@ public class MapperUtil {
 	}
 
 	/**
-	 * Checks if the passed field is parameterized or not
+	 * Checks if the passed field is parameterized or not.
 	 * 
 	 * @param field
-	 * @return
+	 *            the field
+	 * @return true, if is parameterized
 	 */
 	public static boolean isParameterized(Field field) {
 		if (logger.isDebugEnabled()) {
@@ -198,10 +199,11 @@ public class MapperUtil {
 
 	/**
 	 * Returns the class of the parameterized field like for List<String> , this
-	 * method would return String class object
+	 * method would return String class object.
 	 * 
 	 * @param field
-	 * @return
+	 *            the field
+	 * @return the paramterized type
 	 */
 	public static Class<?> getParamterizedType(Field field) {
 		if (logger.isDebugEnabled()) {
@@ -214,6 +216,15 @@ public class MapperUtil {
 		return null;
 	}
 
+	/**
+	 * Creates the target field array instance.
+	 * 
+	 * @param targetField
+	 *            the target field
+	 * @param length
+	 *            the length
+	 * @return the object
+	 */
 	@SuppressWarnings("rawtypes")
 	public static Object createTargetFieldArrayInstance(Field targetField,
 			int length) {
@@ -298,6 +309,15 @@ public class MapperUtil {
 		return targetObject;
 	}
 
+	/**
+	 * Gets the mapping type.
+	 * 
+	 * @param targetClass
+	 *            the target class
+	 * @param sourceClass
+	 *            the source class
+	 * @return the mapping type
+	 */
 	public static MappingType getMappingType(Class<?> targetClass,
 			Class<?>[] sourceClass) {
 		if (logger.isDebugEnabled()) {
